@@ -30,3 +30,9 @@ To keep in mind: we are using 0 to represent an element of the Sudoku grid that 
   * List the items to be modified from this library
   * Think about the graphical interface: txt or other?
   * Think about the non-relational database: txt or MongoDB ?
+
+## Information from homework:
+  * For graphic interface we can use the example this [repository](https://github.com/mattnenterprise/Sudoku), that create a window with the game.
+  * I think that for the non-realtional database will be easier the txt. (For me that i don't know how to use MongoDB)  
+  * The [Sudoku](https://github.com/a11n/sudoku) github, we can use the form that they use create the sudoku or import it like a library for our project.
+  * The generator class and the solver class they don't do much, the grid class is who do the must. 
