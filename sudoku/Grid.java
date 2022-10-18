@@ -82,7 +82,7 @@ public class Grid extends JPanel{
         //this will draw the right most line
         //g2d.drawLine(usedWidth - 1, 0, usedWidth - 1,usedHeight);
         for(int y = 0;y <= usedHeight;y+=slotHeight) {
-            if((y/slotHeight) % puzzle.getBoxHeight() == 0) {
+            if((y/slotHeight) % GridType.getBoxHeight() == 0) {
                 g2d.setStroke(new BasicStroke(2));
                 g2d.drawLine(0, y, usedWidth, y);
             }

@@ -20,7 +20,7 @@ public enum GridType {
         return boxWidth;
     }
 
-    public int getBoxHeight() {
+    public static int getBoxHeight() {
         return boxHeight;
     }
 
