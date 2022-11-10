@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import sudoku.Grid;
-
 public class Solver {
 	private static final int EMPTY = 0;
 

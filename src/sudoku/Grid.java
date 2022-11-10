@@ -1,141 +1,223 @@
 package sudoku;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.font.FontRenderContext;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
+public class Grid {
 
-public class Grid extends JPanel{
-    private SudokuPuzzle puzzle;
-    private int currentlySelectedCol;
-    private int currentlySelectedRow;
-    private int usedWidth;
-    private int usedHeight;
-    private int fontSize;
+  private final Cell[][] grid;
 
-    public Grid() {
-        this.setPreferredSize(new Dimension(540,450));
-        this.addMouseListener(new SudokuPanelMouseAdapter());
-        this.puzzle = new Generator().generateRandomSudoku();
-        currentlySelectedCol = -1;
-        currentlySelectedRow = -1;
-        usedWidth = 0;
-        usedHeight = 0;
-        fontSize = 26;
+  private Grid(Cell[][] grid) {
+    this.grid = grid;
+  }
+
+  public static Grid of(int[][] grid) {
+    verifyGrid(grid);
+
+    Cell[][] cells = new Cell[9][9];
+    List<List<Cell>> rows = new ArrayList<>();
+    List<List<Cell>> columns = new ArrayList<>();
+    List<List<Cell>> boxes = new ArrayList<>();
+
+    for (int i = 0; i < 9; i++) {
+      rows.add(new ArrayList<Cell>());
+      columns.add(new ArrayList<Cell>());
+      boxes.add(new ArrayList<Cell>());
     }
 
+    Cell lastCell = null;
+    for (int row = 0; row < grid.length; row++) {
+      for (int column = 0; column < grid[row].length; column++) {
+        Cell cell = new Cell(grid[row][column]);
+        cells[row][column] = cell;
 
-    public Grid(SudokuPuzzle puzzle) {
-        this.setPreferredSize(new Dimension(540,450));
-        this.addMouseListener(new SudokuPanelMouseAdapter());
-        this.puzzle = puzzle;
-        currentlySelectedCol = -1;
-        currentlySelectedRow = -1;
-        usedWidth = 0;
-        usedHeight = 0;
-        fontSize = 26;
-    }
+        rows.get(row).add(cell);
+        columns.get(column).add(cell);
+        boxes.get((row / 3) * 3 + column / 3).add(cell);
 
-    public void newSudokuPuzzle(SudokuPuzzle puzzle) {
-        this.puzzle = puzzle;
-    }
-
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(new Color(1.0f,1.0f,1.0f));
-
-        int slotWidth = this.getWidth()/GridType.getColumns();
-        int slotHeight = this.getHeight()/GridType.getRows();
-
-        usedWidth = (this.getWidth()/GridType.getColumns())*GridType.getColumns();
-        usedHeight = (this.getHeight()/GridType.getRows())*GridType.getRows();
-
-        g2d.fillRect(0, 0,usedWidth,usedHeight);
-
-        g2d.setColor(new Color(0.0f,0.0f,0.0f));
-        for(int x = 0;x <= usedWidth;x+=slotWidth) {
-            if((x/slotWidth) % GridType.getBoxWidth() == 0) {
-                g2d.setStroke(new BasicStroke(2));
-                g2d.drawLine(x, 0, x, usedHeight);
-            }
-            else {
-                g2d.setStroke(new BasicStroke(1));
-                g2d.drawLine(x, 0, x, usedHeight);
-            }
+        if (lastCell != null) {
+          lastCell.setNextCell(cell);
         }
-        //this will draw the right most line
-        //g2d.drawLine(usedWidth - 1, 0, usedWidth - 1,usedHeight);
-        for(int y = 0;y <= usedHeight;y+=slotHeight) {
-            if((y/slotHeight) % GridType.getBoxHeight() == 0) {
-                g2d.setStroke(new BasicStroke(2));
-                g2d.drawLine(0, y, usedWidth, y);
-            }
-            else {
-                g2d.setStroke(new BasicStroke(1));
-                g2d.drawLine(0, y, usedWidth, y);
-            }
-        }
-        //this will draw the bottom line
-        //g2d.drawLine(0, usedHeight - 1, usedWidth, usedHeight - 1);
 
-        Font f = new Font("Times New Roman", Font.PLAIN, fontSize);
-        g2d.setFont(f);
-        FontRenderContext fContext = g2d.getFontRenderContext();
-        for(int row=0;row < GridType.getRows();row++) {
-            for(int col=0;col < GridType.getColumns();col++) {
-                if(!puzzle.isSlotAvailable(row, col)) {
-                    int textWidth = (int) f.getStringBounds(puzzle.getValue(row, col), fContext).getWidth();
-                    int textHeight = (int) f.getStringBounds(puzzle.getValue(row, col), fContext).getHeight();
-                    g2d.drawString(puzzle.getValue(row, col), (col*slotWidth)+((slotWidth/2)-(textWidth/2)), (row*slotHeight)+((slotHeight/2)+(textHeight/2)));
-                }
-            }
-        }
-        if(currentlySelectedCol != -1 && currentlySelectedRow != -1) {
-            g2d.setColor(new Color(0.0f,0.0f,1.0f,0.3f));
-            g2d.fillRect(currentlySelectedCol * slotWidth,currentlySelectedRow * slotHeight,slotWidth,slotHeight);
-        }
+        lastCell = cell;
+      }
     }
 
-    public void messageFromNumActionListener(String buttonValue) {
-        if(currentlySelectedCol != -1 && currentlySelectedRow != -1) {
-            puzzle.makeMove(currentlySelectedRow, currentlySelectedCol, buttonValue, true);
-            repaint();
-        }
+    for (int i = 0; i < 9; i++) {
+      List<Cell> row = rows.get(i);
+      for (Cell cell : row) {
+        List<Cell> rowNeighbors = new ArrayList<>(row);
+        rowNeighbors.remove(cell);
+
+        cell.setRowNeighbors(rowNeighbors);
+      }
+
+      List<Cell> column = columns.get(i);
+      for (Cell cell : column) {
+        List<Cell> columnNeighbors = new ArrayList<>(column);
+        columnNeighbors.remove(cell);
+
+        cell.setColumnNeighbors(columnNeighbors);
+      }
+
+      List<Cell> box = boxes.get(i);
+      for (Cell cell : box) {
+        List<Cell> boxNeighbors = new ArrayList<>(box);
+        boxNeighbors.remove(cell);
+
+        cell.setBoxNeighbors(boxNeighbors);
+      }
     }
 
-    public class NumActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            messageFromNumActionListener(((JButton) e.getSource()).getText());
+    return new Grid(cells);
+  }
+
+  public static Grid emptyGrid() {
+    int[][] emptyGrid = new int[9][9];
+    return Grid.of(emptyGrid);
+  }
+
+  private static void verifyGrid(int[][] grid) {
+    if(grid == null)
+      throw new IllegalArgumentException("grid must not be null");
+    
+    if(grid.length != 9)
+      throw new IllegalArgumentException("grid must have nine rows");
+
+    for (int[] row : grid) {
+      if (row.length != 9) {
+        throw new IllegalArgumentException("grid must have nine columns");
+      }
+
+      for (int value : row) {
+        if (value < 0 || value > 9) {
+          throw new IllegalArgumentException("grid must contain values from 0-9");
         }
+      }
+    }
+  }
+
+  public int getSize() {
+    return grid.length;
+  }
+
+  public Cell getCell(int row, int column) {
+    return grid[row][column];
+  }
+
+  public boolean isValidValueForCell(Cell cell, int value) {
+    return isValidInRow(cell, value) && isValidInColumn(cell, value) && isValidInBox(cell, value);
+  }
+
+  private boolean isValidInRow(Cell cell, int value) {
+    return !getRowValuesOf(cell).contains(value);
+  }
+
+  private boolean isValidInColumn(Cell cell, int value) {
+    return !getColumnValuesOf(cell).contains(value);
+  }
+
+  private boolean isValidInBox(Cell cell, int value) {
+    return !getBoxValuesOf(cell).contains(value);
+  }
+
+  private Collection<Integer> getRowValuesOf(Cell cell) {
+    List<Integer> rowValues = new ArrayList<>();
+    for (Cell neighbor : cell.getRowNeighbors()) rowValues.add(neighbor.getValue());
+    return rowValues;
+  }
+
+  private Collection<Integer> getColumnValuesOf(Cell cell) {
+    List<Integer> columnValues = new ArrayList<>();
+    for (Cell neighbor : cell.getColumnNeighbors()) columnValues.add(neighbor.getValue());
+    return columnValues;
+  }
+
+  private Collection<Integer> getBoxValuesOf(Cell cell) {
+    List<Integer> boxValues = new ArrayList<>();
+    for (Cell neighbor : cell.getBoxNeighbors()) boxValues.add(neighbor.getValue());
+    return boxValues;
+  }
+
+  public Optional<Cell> getFirstEmptyCell() {
+    Cell firstCell = grid[0][0];
+    if (firstCell.isEmpty()) {
+      return Optional.of(firstCell);
     }
 
-    private class SudokuPanelMouseAdapter extends MouseInputAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if(e.getButton() == MouseEvent.BUTTON1) {
-                int slotWidth = usedWidth/GridType.getColumns();
-                int slotHeight = usedHeight/GridType.getRows();
-                currentlySelectedRow = e.getY() / slotHeight;
-                currentlySelectedCol = e.getX() / slotWidth;
-                e.getComponent().repaint();
-            }
-        }
+    return getNextEmptyCellOf(firstCell);
+  }
+
+  public Optional<Cell> getNextEmptyCellOf(Cell cell) {
+    Cell nextEmptyCell = null;
+
+    while ((cell = cell.getNextCell()) != null) {
+      if (!cell.isEmpty()) {
+        continue;
+      }
+
+      nextEmptyCell = cell;
+      break;
     }
+
+    return Optional.ofNullable(nextEmptyCell);
+  }
+
+  public static class Cell {
+    private int value;
+    private Collection<Cell> rowNeighbors;
+    private Collection<Cell> columnNeighbors;
+    private Collection<Cell> boxNeighbors;
+    private Cell nextCell;
+
+    public Cell(int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
+
+    public boolean isEmpty() {
+      return value == 0;
+    }
+
+    public void setValue(int value) {
+      this.value = value;
+    }
+
+    public Collection<Cell> getRowNeighbors() {
+      return rowNeighbors;
+    }
+
+    public void setRowNeighbors(Collection<Cell> rowNeighbors) {
+      this.rowNeighbors = rowNeighbors;
+    }
+
+    public Collection<Cell> getColumnNeighbors() {
+      return columnNeighbors;
+    }
+
+    public void setColumnNeighbors(Collection<Cell> columnNeighbors) {
+      this.columnNeighbors = columnNeighbors;
+    }
+
+    public Collection<Cell> getBoxNeighbors() {
+      return boxNeighbors;
+    }
+
+    public void setBoxNeighbors(Collection<Cell> boxNeighbors) {
+      this.boxNeighbors = boxNeighbors;
+    }
+
+    public Cell getNextCell() {
+      return nextCell;
+    }
+
+    public void setNextCell(Cell nextCell) {
+      this.nextCell = nextCell;
+    }
+  }
 }
