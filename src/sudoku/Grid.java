@@ -8,7 +8,7 @@ import java.util.Optional;
 public class Grid {
 
   private final Cell[][] grid;
-
+  private Cell[][] usrGrid;
   private Grid(Cell[][] grid) {
     this.grid = grid;
   }
@@ -99,6 +99,8 @@ public class Grid {
     }
   }
 
+  public void setUsrGrid(){usrGrid = this.grid;}
+
   public int getSize() {
     return grid.length;
   }
@@ -165,6 +167,91 @@ public class Grid {
     return Optional.ofNullable(nextEmptyCell);
   }
 
+  public boolean add(int col, int row, int value) {
+    if (this.grid[row][col].getValue() == 0 && value != 0) {
+      if (isValidValueForCell(this.grid[row][col], value)) {
+        this.grid[row][col].setValue(value);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Cell remove(int col, int row) {
+    Cell result;
+    if (this.grid[row][col].getValue() != 0) {
+      return null;
+    }
+    result = this.grid[row][col];
+    this.grid[row][col].setValue(0);
+    return result;
+  }
+  public boolean isSolved() {
+    int counter = 0;
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (this.grid[i][j].getValue() != 0) {
+          counter++;
+          this.grid[i][j].setValue(this.usrGrid[i][j].getValue());
+        }
+        else {
+          if (this.grid[i][j].getValue() != 0) {
+            counter++;
+          }
+        }
+      }
+    }
+    if (counter != 81) {
+      return false;
+    }
+    for (int i = 0; i < 9; i++) {
+      int[] array = new int[9];
+      int value;
+      for (int j = 0; j < 9; j++) {
+        value = this.grid[i][j].getValue();
+        array[value - 1] = 1;
+      }
+      for (int j = 0; j < 9; j++) {
+        if (array[j] == 0) {
+          return false;
+        }
+      }
+    }
+    for (int i = 0; i < 9; i++) {
+      int[] array = new int[9];
+      int value;
+      for (int j = 0; j < 9; j++) {
+        value = this.grid[i][j].getValue();
+        array[value - 1] = 1;
+      }
+      for (int j = 0; j < 9; j++) {
+        if (array[j] == 0) {
+          return false;
+        }
+      }
+    }
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        int[] array = new int[9];
+        int value;
+        for (int k = 0; k < 9; k++) {
+          value = this.grid[i * 3 + k / 3][j * 3 + k % 3].getValue();
+          array[value - 1] = 1;
+        }
+        for (int k = 0; k < 9; k++) {
+          if (array[k] == 0) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  @Override public String toString() {
+    return StringConverter.toString(this);
+  }
+
   public static class Cell {
     private int value;
     private Collection<Cell> rowNeighbors;
@@ -218,6 +305,72 @@ public class Grid {
 
     public void setNextCell(Cell nextCell) {
       this.nextCell = nextCell;
+    }
+  }
+
+  private static class StringConverter {
+    public static String toString(Grid grid) {
+      StringBuilder builder = new StringBuilder();
+      int size = grid.getSize();
+
+      printTopBorder(builder);
+      for (int row = 0; row < size; row++) {
+        builder.append((row + 1)  + " ");
+        printRowBorder(builder);
+        for (int column = 0; column < size; column++) {
+          printValue(builder, grid, row, column);
+          printRightColumnBorder(builder, column + 1, size);
+        }
+        printRowBorder(builder);
+        builder.append("\n");
+        printBottomRowBorder(builder, row + 1, size);
+      }
+      printBottomBorder(builder);
+
+      return builder.toString();
+    }
+
+    private static void printTopBorder(StringBuilder builder) {
+      builder.append("  ║ A │ B │ C ║ D │ E │ F ║ G │ H │ I ║\n");
+      builder.append("══╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗\n");
+    }
+
+    private static void printRowBorder(StringBuilder builder) {
+      builder.append("║");
+    }
+
+    private static void printValue(StringBuilder builder, Grid grid, int row, int column) {
+      int value = grid.getCell(row, column).getValue();
+      String output = value != 0 ? String.valueOf(value) : " ";
+      builder.append(" " + output + " ");
+    }
+
+    private static void printRightColumnBorder(StringBuilder builder, int column, int size) {
+      if (column == size) {
+        return;
+      }
+
+      if (column % 3 == 0) {
+        builder.append("║");
+      } else {
+        builder.append("│");
+      }
+    }
+
+    private static void printBottomRowBorder(StringBuilder builder, int row, int size) {
+      if (row == size) {
+        return;
+      }
+
+      if (row % 3 == 0) {
+        builder.append("══╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣\n");
+      } else {
+        builder.append("──╟───┼───┼───╫───┼───┼───╫───┼───┼───╢\n");
+      }
+    }
+
+    private static void printBottomBorder(StringBuilder builder) {
+      builder.append("══╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n");
     }
   }
 }
