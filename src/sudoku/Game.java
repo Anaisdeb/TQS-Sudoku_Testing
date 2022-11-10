@@ -1,9 +1,6 @@
 package sudoku;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import sudoku.Grid.Cell;
 
 public class Game {
 	private static Grid usrSudoku;
@@ -12,50 +9,44 @@ public class Game {
 	public static void main(String[] args) {
 		scanner = new Scanner(System.in);
 		play();
-		//test();
 		scanner.close();
 	}
 
-	private static void displayMenu() {
-		System.out.println("\n1. Fill in a value.\n2. I give up, see the solution\n3. Exit");
+	private static void startplay() {
+		System.out.println("\n1. Play\n2. Exit game");
+		int usrChoice = scanner.nextInt();
+		switch (usrChoice) {
+		case 1:
+			complexity();
+			break;
+		case 2:
+			System.out.println("Goodbye!");
+			System.exit(0);
+			break;
+		default:
+			System.out.println("Invalid selection, try again.");
+			startplay();
+		}
 	}
 
-	private static int startplay() {
-		Scanner scanner = new Scanner(System.in);
-		int result = 1;
-		System.out.println("\n1. Play...\n2. Exit game...");
-		String usrChoice = scanner.next().toLowerCase();
-		if (usrChoice.equals("1")) {
-			complexity();
-		}
-		else if (usrChoice.equals("2")) {
-			System.out.println("Exiting the game......");
-			result = 0;
-		}
-		else {
-			System.out.println("Invalid difficulty selection, try again...");
-			result = -1;
-		}
-		return result;
-	}
-	private static boolean parseAdd(String str) {
-		Scanner scanner = new Scanner(System.in);
-		if (str.matches("[A-I][1-9]")) {
-			int colASCII = (int)str.charAt(0);
-			int rowASCII = (int)str.charAt(1);
-			System.out.println("\nNow type in the value...");
+	private static boolean cellParser() {
+		System.out.println("\nType in the location to fill in");
+		String location = scanner.next().toUpperCase();
+		if (location.matches("[A-I][1-9]")) {
+			int col = ((int) location.charAt(0))-65;
+			int row = ((int) location.charAt(1))-49;
+			System.out.println("\nNow type in the value");
 			int usrValue = scanner.nextInt();
 			if (usrValue <= 9 && usrValue >= 1) {
-				if (usrSudoku.add(colASCII - 65, rowASCII - 49, usrValue)) {
-					System.out.println("Successfully added " + usrValue + " to " + str + "\n");
+				if (usrSudoku.add(col, row, usrValue)) {
+					System.out.println("Successfully added " + usrValue + " to " + location + "\n");
 					System.out.println(usrSudoku.toString());
 					return true;
 				}
 			}
 		}
-		else {
-			return false;
-		}
+		System.out.println("Can't fill this value in this place, try again");
+		System.out.println(usrSudoku.toString());
 		return false;
 	}
 
@@ -78,76 +69,35 @@ public class Game {
 	}
 
 	private static void play() {
-		Scanner scanner = new Scanner(System.in);
 		boolean endGame;
-		int diffReturn;
-		String location = "";
-		boolean parseAddReturn;
-		ArrayList<String> undoList = new ArrayList<String>();
-		while ((diffReturn = startplay()) != 0) {
+		while (true) {
+			startplay();
 			endGame = false;
-			if (diffReturn == 1) {
-				while (!endGame) {
-					displayMenu();
-					String usrChoice = scanner.next();
-					if (usrChoice.equals("1")) {
-						System.out.println("\nType in the location to fill in...");
-						location = scanner.next().toUpperCase();
-						parseAddReturn = parseAdd(location);
-						boolean solvedStatus = usrSudoku.isSolved();
-						if (solvedStatus) {
-							System.out.println("\nYou Won!");
-							endGame = true;
-						}
-						if (!parseAddReturn) {
-							System.out.println("Can't fill this value in this place, try again...");
-							System.out.println(usrSudoku.toString());
-						}
-						else {
-							undoList.add(location);
-						}
-					}
-					else if (usrChoice.equals("2")) {
-						Solver solver = new Solver();
-						solver.solve(usrSudoku);
-						System.out.println(usrSudoku.toString());
+			while (!endGame) {
+				System.out.println("\n1. Fill in a value\n2. I give up, see the solution\n3. Exit the session");
+				int usrChoice = scanner.nextInt();
+				switch (usrChoice) {
+				case 1:
+					cellParser();
+					if (!usrSudoku.getFirstEmptyCell().isPresent()) {
+						System.out.println("\nYou're a winner!");
 						endGame = true;
 					}
-					else if (usrChoice.equals("3")) {
-						System.out.println("Quitting to difficulty selection...");
-						endGame = true;
-					}
-					else {
-						System.out.println("Invalid input, try again...");
-						endGame = false;
-					}
+					break;
+				case 2:
+					Solver solver = new Solver();
+					solver.solve(usrSudoku);
+					System.out.println(usrSudoku.toString());
+					endGame = true;
+					break;
+				case 3:
+					System.out.println("Quit to choose the difficulty");
+					endGame = true;
+					break;
+				default:
+					System.out.println("Invalid input, try again");
 				}
 			}
 		}
-	}
-
-	
-	private static void test() {
-		// How to create Grid
-		int[][] rawGrid = new int[][] { { 1, 6, 5, 7, 9, 4, 0, 3, 8 }, { 4, 0, 7, 0, 0, 2, 0, 5, 0 },
-				{ 0, 0, 0, 6, 0, 2, 0, 0, 0 }, { 0, 0, 0, 6, 0, 2, 0, 0, 0 }, { 0, 0, 0, 6, 0, 2, 0, 0, 0 },
-				{ 9, 3, 0, 0, 0, 6, 0, 0, 4 }, { 8, 1, 0, 4, 0, 5, 0, 0, 2 }, { 5, 7, 6, 2, 3, 9, 4, 0, 0 },
-				{ 2, 0, 0, 6, 0, 1, 0, 7, 0 } };
-		Grid grid = Grid.of(rawGrid);
-
-		//Solver solver = new Solver();
-		//solver.solve(grid);
-		
-		// How to use Grid
-		int size = grid.getSize();
-		String gridstring =  grid.toString();
-		System.out.println(gridstring);
-		/*for (int row = 0; row < size; row++) {
-			for (int column = 0; column < size; column++) {
-				Cell cell = grid.getCell(row, column);
-				// do something with cell like cell.getValue()
-				System.out.println(cell.getValue());
-			}
-		}*/
 	}
 }

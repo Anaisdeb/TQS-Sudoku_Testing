@@ -168,84 +168,13 @@ public class Grid {
   }
 
   public boolean add(int col, int row, int value) {
-    if (this.grid[row][col].getValue() == 0 && value != 0) {
+    if (this.grid[row][col].isEmpty() && value != 0) {
       if (isValidValueForCell(this.grid[row][col], value)) {
         this.grid[row][col].setValue(value);
         return true;
       }
     }
     return false;
-  }
-
-  public Cell remove(int col, int row) {
-    Cell result;
-    if (this.grid[row][col].getValue() != 0) {
-      return null;
-    }
-    result = this.grid[row][col];
-    this.grid[row][col].setValue(0);
-    return result;
-  }
-  public boolean isSolved() {
-    int counter = 0;
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (this.grid[i][j].getValue() != 0) {
-          counter++;
-          this.grid[i][j].setValue(this.usrGrid[i][j].getValue());
-        }
-        else {
-          if (this.grid[i][j].getValue() != 0) {
-            counter++;
-          }
-        }
-      }
-    }
-    if (counter != 81) {
-      return false;
-    }
-    for (int i = 0; i < 9; i++) {
-      int[] array = new int[9];
-      int value;
-      for (int j = 0; j < 9; j++) {
-        value = this.grid[i][j].getValue();
-        array[value - 1] = 1;
-      }
-      for (int j = 0; j < 9; j++) {
-        if (array[j] == 0) {
-          return false;
-        }
-      }
-    }
-    for (int i = 0; i < 9; i++) {
-      int[] array = new int[9];
-      int value;
-      for (int j = 0; j < 9; j++) {
-        value = this.grid[i][j].getValue();
-        array[value - 1] = 1;
-      }
-      for (int j = 0; j < 9; j++) {
-        if (array[j] == 0) {
-          return false;
-        }
-      }
-    }
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        int[] array = new int[9];
-        int value;
-        for (int k = 0; k < 9; k++) {
-          value = this.grid[i * 3 + k / 3][j * 3 + k % 3].getValue();
-          array[value - 1] = 1;
-        }
-        for (int k = 0; k < 9; k++) {
-          if (array[k] == 0) {
-            return false;
-          }
-        }
-      }
-    }
-    return true;
   }
 
   @Override public String toString() {
