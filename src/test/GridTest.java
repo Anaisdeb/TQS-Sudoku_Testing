@@ -77,7 +77,22 @@ class GridTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getNextEmptyCellOf() {
+    void isValidValueForCellTest() {
+        Grid testgrid = emptyGrid();
+        Cell testcell = testgrid.getCell(0,0);
+        boolean test = testgrid.isValidValueForCell(testcell, 1);
+        assertEquals(test, true);
+
+        Grid grid;
+        int[][] numgrid = new int[][]{
+                {1, 0, 0, 0, 0, 0, 0, 0, 0},{2, 0, 0, 0, 0, 0, 0, 0, 0},{3, 0, 0, 0, 0, 0, 0, 0, 0},
+                {4, 0, 0, 0, 0, 0, 0, 0, 0},{5, 0, 0, 0, 0, 0, 0, 0, 0},{6, 0, 0, 0, 0, 0, 0, 0, 0},
+                {7, 0, 0, 0, 0, 0, 0, 0, 0},{8, 0, 0, 0, 0, 0, 0, 0, 0},{9, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        grid = of(numgrid);
+        Cell cell = grid.getCell(0,1);
+        boolean testfalse = grid.isValidValueForCell(cell,1);
+        assertEquals(testfalse, false);
     }
 
     @org.junit.jupiter.api.Test
