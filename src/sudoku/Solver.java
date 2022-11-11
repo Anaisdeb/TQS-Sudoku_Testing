@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class Solver {
+public class Solver implements SolverInterface{
 	private static final int EMPTY = 0;
 
 	private final int[] values;
