@@ -40,7 +40,7 @@ public class Solver {
 	}
 
 	private int[] generateRandomList() {
-		List<Integer> list = Arrays.asList(EMPTY, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 		Collections.shuffle(list);
 		return list.stream().mapToInt(i -> i).toArray();
 	}
