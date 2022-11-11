@@ -21,7 +21,7 @@ public class Grid {
 	private Grid(Cell[][] grid) {
 		this.grid = grid;
 	}
-	
+
 	public static Grid of(int[][] grid) {
 		verifyGrid(grid);
 
@@ -87,21 +87,21 @@ public class Grid {
 		return Grid.of(emptyGrid);
 	}
 
-	private static void verifyGrid(int[][] grid) {
+	public static void verifyGrid(int[][] grid) {
 		if (grid == null)
-			throw new IllegalArgumentException("grid must not be null");
+			throw new IllegalArgumentException("Grid must not be null");
 
 		if (grid.length != 9)
-			throw new IllegalArgumentException("grid must have nine rows");
+			throw new IllegalArgumentException("Grid must have nine rows");
 
 		for (int[] row : grid) {
 			if (row.length != 9) {
-				throw new IllegalArgumentException("grid must have nine columns");
+				throw new IllegalArgumentException("Grid must have nine columns");
 			}
 
 			for (int value : row) {
 				if (value < 0 || value > 9) {
-					throw new IllegalArgumentException("grid must contain values from 0-9");
+					throw new IllegalArgumentException("Grid must contain values from 0-9");
 				}
 			}
 		}
@@ -115,7 +115,11 @@ public class Grid {
 		return grid[row][column];
 	}
 	
-	public int[][] tab(){
+	public void setCellValue(int row, int column, int value){
+	    grid[row][column].setValue(value);
+	  }
+
+	public int[][] tab() {
 		int[][] tab = new int[9][9];
 		int size = grid.length;
 		for (int row = 0; row < size; row++) {
