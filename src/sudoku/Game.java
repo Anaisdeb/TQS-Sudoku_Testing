@@ -57,7 +57,7 @@ public class Game {
 		if (complexity > 0 && complexity < 81) {
 			Generator generator = new Generator();
 			usrSudoku = generator.generate(complexity);
-			usrSudoku.setUsrGrid();
+			usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
 			System.out.println(usrSudoku.toString());
 		} else if (complexity == 100) {
 			System.out.println("Goodbye!");

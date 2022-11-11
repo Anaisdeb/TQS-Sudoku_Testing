@@ -7,299 +7,321 @@ import java.util.Optional;
 
 public class Grid {
 
-  private final Cell[][] grid;
-  private Cell[][] usrGrid;
-  private Grid(Cell[][] grid) {
-    this.grid = grid;
-  }
+	private final Cell[][] grid;
+	private Grid initialGrid;
 
-  public static Grid of(int[][] grid) {
-    verifyGrid(grid);
+	public Grid getInitialGrid() {
+		return initialGrid;
+	}
 
-    Cell[][] cells = new Cell[9][9];
-    List<List<Cell>> rows = new ArrayList<>();
-    List<List<Cell>> columns = new ArrayList<>();
-    List<List<Cell>> boxes = new ArrayList<>();
+	public void setInitialGrid(Grid initialGrid) {
+		this.initialGrid = initialGrid;
+	}
 
-    for (int i = 0; i < 9; i++) {
-      rows.add(new ArrayList<Cell>());
-      columns.add(new ArrayList<Cell>());
-      boxes.add(new ArrayList<Cell>());
-    }
+	private Grid(Cell[][] grid) {
+		this.grid = grid;
+	}
+	
+	public static Grid of(int[][] grid) {
+		verifyGrid(grid);
 
-    Cell lastCell = null;
-    for (int row = 0; row < grid.length; row++) {
-      for (int column = 0; column < grid[row].length; column++) {
-        Cell cell = new Cell(grid[row][column]);
-        cells[row][column] = cell;
+		Cell[][] cells = new Cell[9][9];
+		List<List<Cell>> rows = new ArrayList<>();
+		List<List<Cell>> columns = new ArrayList<>();
+		List<List<Cell>> boxes = new ArrayList<>();
 
-        rows.get(row).add(cell);
-        columns.get(column).add(cell);
-        boxes.get((row / 3) * 3 + column / 3).add(cell);
+		for (int i = 0; i < 9; i++) {
+			rows.add(new ArrayList<Cell>());
+			columns.add(new ArrayList<Cell>());
+			boxes.add(new ArrayList<Cell>());
+		}
 
-        if (lastCell != null) {
-          lastCell.setNextCell(cell);
-        }
+		Cell lastCell = null;
+		for (int row = 0; row < grid.length; row++) {
+			for (int column = 0; column < grid[row].length; column++) {
+				Cell cell = new Cell(grid[row][column]);
+				cells[row][column] = cell;
 
-        lastCell = cell;
-      }
-    }
+				rows.get(row).add(cell);
+				columns.get(column).add(cell);
+				boxes.get((row / 3) * 3 + column / 3).add(cell);
 
-    for (int i = 0; i < 9; i++) {
-      List<Cell> row = rows.get(i);
-      for (Cell cell : row) {
-        List<Cell> rowNeighbors = new ArrayList<>(row);
-        rowNeighbors.remove(cell);
+				if (lastCell != null) {
+					lastCell.setNextCell(cell);
+				}
 
-        cell.setRowNeighbors(rowNeighbors);
-      }
+				lastCell = cell;
+			}
+		}
 
-      List<Cell> column = columns.get(i);
-      for (Cell cell : column) {
-        List<Cell> columnNeighbors = new ArrayList<>(column);
-        columnNeighbors.remove(cell);
+		for (int i = 0; i < 9; i++) {
+			List<Cell> row = rows.get(i);
+			for (Cell cell : row) {
+				List<Cell> rowNeighbors = new ArrayList<>(row);
+				rowNeighbors.remove(cell);
 
-        cell.setColumnNeighbors(columnNeighbors);
-      }
+				cell.setRowNeighbors(rowNeighbors);
+			}
 
-      List<Cell> box = boxes.get(i);
-      for (Cell cell : box) {
-        List<Cell> boxNeighbors = new ArrayList<>(box);
-        boxNeighbors.remove(cell);
+			List<Cell> column = columns.get(i);
+			for (Cell cell : column) {
+				List<Cell> columnNeighbors = new ArrayList<>(column);
+				columnNeighbors.remove(cell);
 
-        cell.setBoxNeighbors(boxNeighbors);
-      }
-    }
+				cell.setColumnNeighbors(columnNeighbors);
+			}
 
-    return new Grid(cells);
-  }
+			List<Cell> box = boxes.get(i);
+			for (Cell cell : box) {
+				List<Cell> boxNeighbors = new ArrayList<>(box);
+				boxNeighbors.remove(cell);
 
-  public static Grid emptyGrid() {
-    int[][] emptyGrid = new int[9][9];
-    return Grid.of(emptyGrid);
-  }
+				cell.setBoxNeighbors(boxNeighbors);
+			}
+		}
+		return new Grid(cells);
+	}
 
-  private static void verifyGrid(int[][] grid) {
-    if(grid == null)
-      throw new IllegalArgumentException("grid must not be null");
-    
-    if(grid.length != 9)
-      throw new IllegalArgumentException("grid must have nine rows");
+	public static Grid emptyGrid() {
+		int[][] emptyGrid = new int[9][9];
+		return Grid.of(emptyGrid);
+	}
 
-    for (int[] row : grid) {
-      if (row.length != 9) {
-        throw new IllegalArgumentException("grid must have nine columns");
-      }
+	private static void verifyGrid(int[][] grid) {
+		if (grid == null)
+			throw new IllegalArgumentException("grid must not be null");
 
-      for (int value : row) {
-        if (value < 0 || value > 9) {
-          throw new IllegalArgumentException("grid must contain values from 0-9");
-        }
-      }
-    }
-  }
+		if (grid.length != 9)
+			throw new IllegalArgumentException("grid must have nine rows");
 
-  public void setUsrGrid(){usrGrid = this.grid;}
+		for (int[] row : grid) {
+			if (row.length != 9) {
+				throw new IllegalArgumentException("grid must have nine columns");
+			}
 
-  public int getSize() {
-    return grid.length;
-  }
+			for (int value : row) {
+				if (value < 0 || value > 9) {
+					throw new IllegalArgumentException("grid must contain values from 0-9");
+				}
+			}
+		}
+	}
 
-  public Cell getCell(int row, int column) {
-    return grid[row][column];
-  }
+	public int getSize() {
+		return grid.length;
+	}
 
-  public boolean isValidValueForCell(Cell cell, int value) {
-    return isValidInRow(cell, value) && isValidInColumn(cell, value) && isValidInBox(cell, value);
-  }
+	public Cell getCell(int row, int column) {
+		return grid[row][column];
+	}
+	
+	public int[][] tab(){
+		int[][] tab = new int[9][9];
+		int size = grid.length;
+		for (int row = 0; row < size; row++) {
+			for (int column = 0; column < size; column++) {
+				Cell cell = grid[row][column];
+				tab[row][column] = cell.getValue();
+			}
+		}
+		return tab;
+	}
 
-  private boolean isValidInRow(Cell cell, int value) {
-    return !getRowValuesOf(cell).contains(value);
-  }
+	public boolean isValidValueForCell(Cell cell, int value) {
+		return isValidInRow(cell, value) && isValidInColumn(cell, value) && isValidInBox(cell, value);
+	}
 
-  private boolean isValidInColumn(Cell cell, int value) {
-    return !getColumnValuesOf(cell).contains(value);
-  }
+	private boolean isValidInRow(Cell cell, int value) {
+		return !getRowValuesOf(cell).contains(value);
+	}
 
-  private boolean isValidInBox(Cell cell, int value) {
-    return !getBoxValuesOf(cell).contains(value);
-  }
+	private boolean isValidInColumn(Cell cell, int value) {
+		return !getColumnValuesOf(cell).contains(value);
+	}
 
-  private Collection<Integer> getRowValuesOf(Cell cell) {
-    List<Integer> rowValues = new ArrayList<>();
-    for (Cell neighbor : cell.getRowNeighbors()) rowValues.add(neighbor.getValue());
-    return rowValues;
-  }
+	private boolean isValidInBox(Cell cell, int value) {
+		return !getBoxValuesOf(cell).contains(value);
+	}
 
-  private Collection<Integer> getColumnValuesOf(Cell cell) {
-    List<Integer> columnValues = new ArrayList<>();
-    for (Cell neighbor : cell.getColumnNeighbors()) columnValues.add(neighbor.getValue());
-    return columnValues;
-  }
+	private Collection<Integer> getRowValuesOf(Cell cell) {
+		List<Integer> rowValues = new ArrayList<>();
+		for (Cell neighbor : cell.getRowNeighbors())
+			rowValues.add(neighbor.getValue());
+		return rowValues;
+	}
 
-  private Collection<Integer> getBoxValuesOf(Cell cell) {
-    List<Integer> boxValues = new ArrayList<>();
-    for (Cell neighbor : cell.getBoxNeighbors()) boxValues.add(neighbor.getValue());
-    return boxValues;
-  }
+	private Collection<Integer> getColumnValuesOf(Cell cell) {
+		List<Integer> columnValues = new ArrayList<>();
+		for (Cell neighbor : cell.getColumnNeighbors())
+			columnValues.add(neighbor.getValue());
+		return columnValues;
+	}
 
-  public Optional<Cell> getFirstEmptyCell() {
-    Cell firstCell = grid[0][0];
-    if (firstCell.isEmpty()) {
-      return Optional.of(firstCell);
-    }
+	private Collection<Integer> getBoxValuesOf(Cell cell) {
+		List<Integer> boxValues = new ArrayList<>();
+		for (Cell neighbor : cell.getBoxNeighbors())
+			boxValues.add(neighbor.getValue());
+		return boxValues;
+	}
 
-    return getNextEmptyCellOf(firstCell);
-  }
+	public Optional<Cell> getFirstEmptyCell() {
+		Cell firstCell = grid[0][0];
+		if (firstCell.isEmpty()) {
+			return Optional.of(firstCell);
+		}
 
-  public Optional<Cell> getNextEmptyCellOf(Cell cell) {
-    Cell nextEmptyCell = null;
+		return getNextEmptyCellOf(firstCell);
+	}
 
-    while ((cell = cell.getNextCell()) != null) {
-      if (!cell.isEmpty()) {
-        continue;
-      }
+	public Optional<Cell> getNextEmptyCellOf(Cell cell) {
+		Cell nextEmptyCell = null;
 
-      nextEmptyCell = cell;
-      break;
-    }
+		while ((cell = cell.getNextCell()) != null) {
+			if (!cell.isEmpty()) {
+				continue;
+			}
 
-    return Optional.ofNullable(nextEmptyCell);
-  }
+			nextEmptyCell = cell;
+			break;
+		}
 
-  public boolean add(int col, int row, int value) {
-    if (this.grid[row][col].isEmpty() && value != 0) {
-      if (isValidValueForCell(this.grid[row][col], value)) {
-        this.grid[row][col].setValue(value);
-        return true;
-      }
-    }
-    return false;
-  }
+		return Optional.ofNullable(nextEmptyCell);
+	}
 
-  @Override public String toString() {
-    return StringConverter.toString(this);
-  }
+	public boolean add(int col, int row, int value) {
+		if (initialGrid.grid[row][col].isEmpty() && value != 0) {
+			if (isValidValueForCell(grid[row][col], value)) {
+				grid[row][col].setValue(value);
+				return true;
+			}
+		}
+		return false;
+	}
 
-  public static class Cell {
-    private int value;
-    private Collection<Cell> rowNeighbors;
-    private Collection<Cell> columnNeighbors;
-    private Collection<Cell> boxNeighbors;
-    private Cell nextCell;
+	@Override
+	public String toString() {
+		return StringConverter.toString(this);
+	}
 
-    public Cell(int value) {
-      this.value = value;
-    }
+	public static class Cell {
+		private int value;
+		private Collection<Cell> rowNeighbors;
+		private Collection<Cell> columnNeighbors;
+		private Collection<Cell> boxNeighbors;
+		private Cell nextCell;
 
-    public int getValue() {
-      return value;
-    }
+		public Cell(int value) {
+			this.value = value;
+		}
 
-    public boolean isEmpty() {
-      return value == 0;
-    }
+		public int getValue() {
+			return value;
+		}
 
-    public void setValue(int value) {
-      this.value = value;
-    }
+		public boolean isEmpty() {
+			return value == 0;
+		}
 
-    public Collection<Cell> getRowNeighbors() {
-      return rowNeighbors;
-    }
+		public void setValue(int value) {
+			this.value = value;
+		}
 
-    public void setRowNeighbors(Collection<Cell> rowNeighbors) {
-      this.rowNeighbors = rowNeighbors;
-    }
+		public Collection<Cell> getRowNeighbors() {
+			return rowNeighbors;
+		}
 
-    public Collection<Cell> getColumnNeighbors() {
-      return columnNeighbors;
-    }
+		public void setRowNeighbors(Collection<Cell> rowNeighbors) {
+			this.rowNeighbors = rowNeighbors;
+		}
 
-    public void setColumnNeighbors(Collection<Cell> columnNeighbors) {
-      this.columnNeighbors = columnNeighbors;
-    }
+		public Collection<Cell> getColumnNeighbors() {
+			return columnNeighbors;
+		}
 
-    public Collection<Cell> getBoxNeighbors() {
-      return boxNeighbors;
-    }
+		public void setColumnNeighbors(Collection<Cell> columnNeighbors) {
+			this.columnNeighbors = columnNeighbors;
+		}
 
-    public void setBoxNeighbors(Collection<Cell> boxNeighbors) {
-      this.boxNeighbors = boxNeighbors;
-    }
+		public Collection<Cell> getBoxNeighbors() {
+			return boxNeighbors;
+		}
 
-    public Cell getNextCell() {
-      return nextCell;
-    }
+		public void setBoxNeighbors(Collection<Cell> boxNeighbors) {
+			this.boxNeighbors = boxNeighbors;
+		}
 
-    public void setNextCell(Cell nextCell) {
-      this.nextCell = nextCell;
-    }
-  }
+		public Cell getNextCell() {
+			return nextCell;
+		}
 
-  private static class StringConverter {
-    public static String toString(Grid grid) {
-      StringBuilder builder = new StringBuilder();
-      int size = grid.getSize();
+		public void setNextCell(Cell nextCell) {
+			this.nextCell = nextCell;
+		}
+	}
 
-      printTopBorder(builder);
-      for (int row = 0; row < size; row++) {
-        builder.append((row + 1)  + " ");
-        printRowBorder(builder);
-        for (int column = 0; column < size; column++) {
-          printValue(builder, grid, row, column);
-          printRightColumnBorder(builder, column + 1, size);
-        }
-        printRowBorder(builder);
-        builder.append("\n");
-        printBottomRowBorder(builder, row + 1, size);
-      }
-      printBottomBorder(builder);
+	private static class StringConverter {
+		public static String toString(Grid grid) {
+			StringBuilder builder = new StringBuilder();
+			int size = grid.getSize();
 
-      return builder.toString();
-    }
+			printTopBorder(builder);
+			for (int row = 0; row < size; row++) {
+				builder.append((row + 1) + " ");
+				printRowBorder(builder);
+				for (int column = 0; column < size; column++) {
+					printValue(builder, grid, row, column);
+					printRightColumnBorder(builder, column + 1, size);
+				}
+				printRowBorder(builder);
+				builder.append("\n");
+				printBottomRowBorder(builder, row + 1, size);
+			}
+			printBottomBorder(builder);
 
-    private static void printTopBorder(StringBuilder builder) {
-      builder.append("  ║ A │ B │ C ║ D │ E │ F ║ G │ H │ I ║\n");
-      builder.append("══╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗\n");
-    }
+			return builder.toString();
+		}
 
-    private static void printRowBorder(StringBuilder builder) {
-      builder.append("║");
-    }
+		private static void printTopBorder(StringBuilder builder) {
+			builder.append("  ║ A │ B │ C ║ D │ E │ F ║ G │ H │ I ║\n");
+			builder.append("══╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗\n");
+		}
 
-    private static void printValue(StringBuilder builder, Grid grid, int row, int column) {
-      int value = grid.getCell(row, column).getValue();
-      String output = value != 0 ? String.valueOf(value) : " ";
-      builder.append(" " + output + " ");
-    }
+		private static void printRowBorder(StringBuilder builder) {
+			builder.append("║");
+		}
 
-    private static void printRightColumnBorder(StringBuilder builder, int column, int size) {
-      if (column == size) {
-        return;
-      }
+		private static void printValue(StringBuilder builder, Grid grid, int row, int column) {
+			int value = grid.getCell(row, column).getValue();
+			String output = value != 0 ? String.valueOf(value) : " ";
+			builder.append(" " + output + " ");
+		}
 
-      if (column % 3 == 0) {
-        builder.append("║");
-      } else {
-        builder.append("│");
-      }
-    }
+		private static void printRightColumnBorder(StringBuilder builder, int column, int size) {
+			if (column == size) {
+				return;
+			}
 
-    private static void printBottomRowBorder(StringBuilder builder, int row, int size) {
-      if (row == size) {
-        return;
-      }
+			if (column % 3 == 0) {
+				builder.append("║");
+			} else {
+				builder.append("│");
+			}
+		}
 
-      if (row % 3 == 0) {
-        builder.append("══╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣\n");
-      } else {
-        builder.append("──╟───┼───┼───╫───┼───┼───╫───┼───┼───╢\n");
-      }
-    }
+		private static void printBottomRowBorder(StringBuilder builder, int row, int size) {
+			if (row == size) {
+				return;
+			}
 
-    private static void printBottomBorder(StringBuilder builder) {
-      builder.append("══╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n");
-    }
-  }
+			if (row % 3 == 0) {
+				builder.append("══╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣\n");
+			} else {
+				builder.append("──╟───┼───┼───╫───┼───┼───╫───┼───┼───╢\n");
+			}
+		}
+
+		private static void printBottomBorder(StringBuilder builder) {
+			builder.append("══╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n");
+		}
+	}
 }
