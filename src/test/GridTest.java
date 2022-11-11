@@ -2,6 +2,8 @@ package test;
 
 import sudoku.Grid;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static sudoku.Grid.*;
 
@@ -39,9 +41,15 @@ class GridTest {
                 IllegalArgumentException.class, () -> {
                     Grid grid;
                     int[][] numgrid = new int[][]{
-                        {10, 0, 0, 6, 0, 2, 0, 0, 0},{1, 0, 0, 6, 0, 2, 0, 0, 0},{0, 0, 0, 6, 0, 2, 0, 0, 0},
-                        {0, 0, 0, 6, 0, 2, 0, 0, 0},{0, 0, 0, 6, 0, 2, 0, 0, 0},{0, 0, 0, 6, 0, 2, 0, 0, 0},
-                        {0, 8, 7, 9, 4, 3, 2, 0, 0},{0, 0, 0, 6, 0, 2, 0, 0, 0},{0, 0, 0, 6, 0, 2, 0, 0, 0}
+                        {10, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {1, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 8, 7, 9, 4, 3, 2, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                        {0, 0, 0, 6, 0, 2, 0, 0, 0}
                     };
                     verifyGrid(numgrid);
                 }
@@ -55,27 +63,64 @@ class GridTest {
 
     @org.junit.jupiter.api.Test
     void ofTest() {
-        Grid testgrid = emptyGrid();
-        testgrid.setInitialGrid(Grid.of(testgrid.tab()));
-        testgrid.add(0,0,1);
-        testgrid.add(1,0,2);
-        testgrid.add(2,0,3);
-        testgrid.add(3,0,4);
-        testgrid.add(4,0,5);
-        testgrid.add(5,0,6);
-        testgrid.add(6,0,7);
-        testgrid.add(7,0,8);
-        testgrid.add(8,0,9);
+
+        Cell[][] testcells = new Cell[9][9];
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                Cell cell = new Cell(0);
+                testcells[row][column] = cell;
+            }
+        }
+        Grid testgrid = new Grid(testcells);
+
+        testgrid.setInitialGrid(testgrid);
+
+        testgrid.setCellValue(0,0,1);
+        testgrid.setCellValue(1,0,2);
+        testgrid.setCellValue(2,0,3);
+        testgrid.setCellValue(3,0,4);
+        testgrid.setCellValue(4,0,5);
+        testgrid.setCellValue(5,0,6);
+        testgrid.setCellValue(6,0,7);
+        testgrid.setCellValue(7,0,8);
+        testgrid.setCellValue(8,0,9);
 
         int[][] numgrid = new int[][]{
-                {1, 0, 0, 0, 0, 0, 0, 0, 0},{2, 0, 0, 0, 0, 0, 0, 0, 0},{3, 0, 0, 0, 0, 0, 0, 0, 0},
-                {4, 0, 0, 0, 0, 0, 0, 0, 0},{5, 0, 0, 0, 0, 0, 0, 0, 0},{6, 0, 0, 0, 0, 0, 0, 0, 0},
-                {7, 0, 0, 0, 0, 0, 0, 0, 0},{8, 0, 0, 0, 0, 0, 0, 0, 0},{9, 0, 0, 0, 0, 0, 0, 0, 0}
+                {1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {2, 0, 0, 0, 0, 0, 0, 0, 0},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0},
+                {4, 0, 0, 0, 0, 0, 0, 0, 0},
+                {5, 0, 0, 0, 0, 0, 0, 0, 0},
+                {6, 0, 0, 0, 0, 0, 0, 0, 0},
+                {7, 0, 0, 0, 0, 0, 0, 0, 0},
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {9, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         Grid grid = Grid.of(numgrid);
-        assert(testgrid == grid):"of function";
+
+        //I'm doing this becouse i don't know how to make the class 100% equals, becouse cell have
+        //      private Collection<Cell> rowNeighbors;
+        //		private Collection<Cell> columnNeighbors;
+        //		private Collection<Cell> boxNeighbors;
+        //		private Cell nextCell;
+        assert(Objects.equals(testgrid.toString(), grid.toString()));
     }
 
+    @org.junit.jupiter.api.Test
+    void emptyGridTest(){
+        Cell[][] testcells = new Cell[9][9];
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                Cell cell = new Cell(0);
+                testcells[row][column] = cell;
+            }
+        }
+        Grid testgrid = new Grid(testcells);
+
+        Grid test = emptyGrid();
+
+        assert(Objects.equals(testgrid.toString(), test.toString()));
+    }
     @org.junit.jupiter.api.Test
     void isValidValueForCellTest() {
         Grid testgrid = emptyGrid();
@@ -85,21 +130,28 @@ class GridTest {
 
         Grid grid;
         int[][] numgrid = new int[][]{
-                {1, 0, 0, 0, 0, 0, 0, 0, 0},{2, 0, 0, 0, 0, 0, 0, 0, 0},{3, 0, 0, 0, 0, 0, 0, 0, 0},
-                {4, 0, 0, 0, 0, 0, 0, 0, 0},{5, 0, 0, 0, 0, 0, 0, 0, 0},{6, 0, 0, 0, 0, 0, 0, 0, 0},
-                {7, 0, 0, 0, 0, 0, 0, 0, 0},{8, 0, 0, 0, 0, 0, 0, 0, 0},{9, 0, 0, 0, 0, 0, 0, 0, 0}
+                {1, 0, 0, 0, 0, 0, 0, 0, 5},
+                {2, 0, 0, 0, 0, 0, 0, 0, 0},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0},
+                {4, 0, 9, 0, 0, 0, 0, 0, 0},
+                {5, 0, 0, 0, 0, 0, 0, 0, 0},
+                {6, 0, 0, 0, 0, 0, 0, 0, 0},
+                {7, 0, 0, 0, 0, 0, 0, 0, 0},
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {9, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         grid = of(numgrid);
-        Cell cell = grid.getCell(0,1);
-        boolean testfalse = grid.isValidValueForCell(cell,1);
-        assertEquals(testfalse, false);
+        Cell rowcell = grid.getCell(0,1);
+        boolean testfalserow = grid.isValidValueForCell(rowcell,5);
+        assertEquals(testfalserow, false);
+
+        Cell colcell = grid.getCell(0,2);
+        boolean testfalsecol = grid.isValidValueForCell(colcell,9);
+        assertEquals(testfalsecol, false);
+
+        Cell boxcell = grid.getCell(2,2);
+        boolean testfalsebox = grid.isValidValueForCell(boxcell,1);
+        assertEquals(testfalsebox, false);
     }
 
-    @org.junit.jupiter.api.Test
-    void add() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void testToString() {
-    }
 }

@@ -18,7 +18,7 @@ public class Grid {
 		this.initialGrid = initialGrid;
 	}
 
-	private Grid(Cell[][] grid) {
+	public Grid(Cell[][] grid) {
 		this.grid = grid;
 	}
 
