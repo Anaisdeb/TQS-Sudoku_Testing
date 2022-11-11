@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class Grid {
-
   private final Cell[][] grid;
   private Cell[][] usrGrid;
   private Grid(Cell[][] grid) {
     this.grid = grid;
   }
-
   public static Grid of(int[][] grid) {
     verifyGrid(grid);
 
@@ -79,21 +77,21 @@ public class Grid {
     return Grid.of(emptyGrid);
   }
 
-  private static void verifyGrid(int[][] grid) {
+  public static void verifyGrid(int[][] grid) {
     if(grid == null)
-      throw new IllegalArgumentException("grid must not be null");
+      throw new IllegalArgumentException("Grid must not be null");
     
     if(grid.length != 9)
-      throw new IllegalArgumentException("grid must have nine rows");
+      throw new IllegalArgumentException("Grid must have nine rows");
 
     for (int[] row : grid) {
       if (row.length != 9) {
-        throw new IllegalArgumentException("grid must have nine columns");
+        throw new IllegalArgumentException("Grid must have nine columns");
       }
 
       for (int value : row) {
         if (value < 0 || value > 9) {
-          throw new IllegalArgumentException("grid must contain values from 0-9");
+          throw new IllegalArgumentException("Grid must contain values from 0-9");
         }
       }
     }
@@ -103,6 +101,10 @@ public class Grid {
 
   public int getSize() {
     return grid.length;
+  }
+
+  public void setCellValue(int row, int column, int value){
+    grid[row][column].setValue(value);
   }
 
   public Cell getCell(int row, int column) {
@@ -168,7 +170,7 @@ public class Grid {
   }
 
   public boolean add(int col, int row, int value) {
-    if (this.grid[row][col].isEmpty() && value != 0) {
+    if (this.usrGrid[row][col].isEmpty() && value != 0) {
       if (isValidValueForCell(this.grid[row][col], value)) {
         this.grid[row][col].setValue(value);
         return true;
