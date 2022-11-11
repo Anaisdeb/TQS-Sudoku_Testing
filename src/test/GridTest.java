@@ -1,7 +1,9 @@
 package test;
 
+import org.junit.Assert;
 import sudoku.Grid;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -121,6 +123,7 @@ class GridTest {
 
         assert(Objects.equals(testgrid.toString(), test.toString()));
     }
+
     @org.junit.jupiter.api.Test
     void isValidValueForCellTest() {
         Grid testgrid = emptyGrid();
@@ -154,4 +157,27 @@ class GridTest {
         assertEquals(testfalsebox, false);
     }
 
+    @org.junit.jupiter.api.Test
+    void tabTest() {
+        Grid testgrid = emptyGrid();
+        int[][] grid = new int[9][9];
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                grid[row][column] = 0;
+            }
+        }
+        assert(Arrays.deepEquals(grid, testgrid.tab()));
+    }
+
+    @org.junit.jupiter.api.Test
+    void getFirstEmptyCellTest(){}
+
+    @org.junit.jupiter.api.Test
+    void getNextEmptyCellOfTest(){}
+
+    @org.junit.jupiter.api.Test
+    void addTest(){}
+
+    @org.junit.jupiter.api.Test
+    void StringConverterTest(){}
 }
