@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Play {
     private static Grid usrSudoku;
     private static Scanner scanner;
-    private static boolean startplay(int exit) {
+    private static boolean startplay(int exit, GeneratorInterface gen) {
         System.out.println("\n1. Play\n2. Exit game");
         boolean game = true;
         int usrChoice = scanner.nextInt();
         switch (usrChoice) {
             case 1:
-                game = complexity(exit);
+                game = complexity(exit, gen);
                 break;
             case 2:
                 System.out.println("Goodbye!");
@@ -23,7 +23,7 @@ public class Play {
                 break;
             default:
                 System.out.println("Invalid selection, try again.");
-                startplay(exit);
+                startplay(exit, gen);
         }
         return game;
     }
@@ -49,12 +49,12 @@ public class Play {
         return false;
     }
 
-    private static boolean complexity(int exit) {
+    private static boolean complexity(int exit, GeneratorInterface gen) {
         System.out.println(
                 "Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
         int complexity = scanner.nextInt();
         if (complexity > 0 && complexity < 81) {
-            Generator generator = new Generator(new Solver());
+            GeneratorInterface generator = gen;
             usrSudoku = generator.generate(complexity);
             usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
             System.out.println(usrSudoku.toString());
@@ -67,17 +67,17 @@ public class Play {
             }
         } else {
             System.out.println("Invalid complexity selection. Try again.");
-            complexity(exit);
+            complexity(exit, gen);
         }
         return true;
     }
 
-    public static void play(int exit) {
+    public static void play(int exit, GeneratorInterface gen) {
         scanner = new Scanner(System.in);
         boolean endGame;
         boolean game = true;
         while (game) {
-            game = startplay(exit);
+            game = startplay(exit, gen);
             if (game){
                 endGame = false;
                 while (!endGame) {
@@ -109,4 +109,3 @@ public class Play {
         }
     }
 }
-

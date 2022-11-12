@@ -2,20 +2,9 @@ package sudoku;
 
 import java.util.Random;
 
-public class Generator implements GeneratorInterface{
-  private SolverInterface solver;
+public interface GeneratorInterface {
 
-  public Generator(SolverInterface solver) {
-    this.solver = solver;
-  }
-
-  public Grid generate(int numberOfEmptyCells) {
-    Grid grid = generate();
-
-    eraseCells(grid, numberOfEmptyCells);
-
-    return grid;
-  }
+  public Grid generate(int numberOfEmptyCells);
 
   private void eraseCells(Grid grid, int numberOfEmptyCells) {
     Random random = new Random();
@@ -33,10 +22,6 @@ public class Generator implements GeneratorInterface{
   }
 
   private Grid generate() {
-    Grid grid = Grid.emptyGrid();
-
-    solver.solve(grid);
-
-    return grid;
+    return null;
   }
 }

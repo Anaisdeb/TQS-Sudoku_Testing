@@ -7,7 +7,9 @@ public class Game {
 
 	public static void main(String[] args) {
 		Play play = new Play();
-		play.play(0);
+		SolverInterface solver = new Solver();
+		GeneratorInterface gen = new Generator(solver);
+		play.play(0, gen);
 	}
 
 }
