@@ -1,0 +1,4 @@
+
+1. Play
+2. Exit game
+Goodbye!

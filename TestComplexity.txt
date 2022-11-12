@@ -1,0 +1,18 @@
+
+1. Play
+2. Exit game
+Enter the desired number of empty cells which will control the complexity of the grid: 
+Enter 100 to exit game.
+Invalid complexity selection. Try again.
+Enter the desired number of empty cells which will control the complexity of the grid: 
+Enter 100 to exit game.
+Invalid complexity selection. Try again.
+Enter the desired number of empty cells which will control the complexity of the grid: 
+Enter 100 to exit game.
+Invalid complexity selection. Try again.
+Enter the desired number of empty cells which will control the complexity of the grid: 
+Enter 100 to exit game.
+Invalid complexity selection. Try again.
+Enter the desired number of empty cells which will control the complexity of the grid: 
+Enter 100 to exit game.
+Goodbye!
