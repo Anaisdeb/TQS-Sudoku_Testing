@@ -1,9 +1,12 @@
 package test;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import sudoku.Grid;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +33,33 @@ class GridTest {
         );
         assertEquals("Grid must have nine rows", rowexception.getMessage());
 
+        Throwable rowexception2 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] rowgrid = new int[0][9];
+                    verifyGrid(rowgrid);
+                }
+        );
+        assertEquals("Grid must have nine rows", rowexception2.getMessage());
+
+        Throwable rowexception3 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] rowgrid = new int[10][9];
+                    verifyGrid(rowgrid);
+                }
+        );
+        assertEquals("Grid must have nine rows", rowexception3.getMessage());
+
+        Throwable rowexception4 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] rowgrid = new int[8][9];
+                    verifyGrid(rowgrid);
+                }
+        );
+        assertEquals("Grid must have nine rows", rowexception4.getMessage());
+
         Throwable colexception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     Grid grid;
@@ -38,6 +68,33 @@ class GridTest {
                 }
         );
         assertEquals("Grid must have nine columns", colexception.getMessage());
+
+        Throwable colexception2 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] colgrid = new int[9][10];
+                    verifyGrid(colgrid);
+                }
+        );
+        assertEquals("Grid must have nine columns", colexception2.getMessage());
+
+        Throwable colexception3 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] colgrid = new int[9][8];
+                    verifyGrid(colgrid);
+                }
+        );
+        assertEquals("Grid must have nine columns", colexception3.getMessage());
+
+        Throwable colexception4 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] colgrid = new int[9][0];
+                    verifyGrid(colgrid);
+                }
+        );
+        assertEquals("Grid must have nine columns", colexception4.getMessage());
 
         Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> {
@@ -57,6 +114,25 @@ class GridTest {
                 }
         );
         assertEquals("Grid must contain values from 0-9", exception.getMessage());
+
+        Throwable exception2 = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    Grid grid;
+                    int[][] numgrid = new int[][]{
+                            {-1, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {1, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 8, 7, 9, 4, 3, 2, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0},
+                            {0, 0, 0, 6, 0, 2, 0, 0, 0}
+                    };
+                    verifyGrid(numgrid);
+                }
+        );
+        assertEquals("Grid must contain values from 0-9", exception2.getMessage());
 
         Grid grid;
         int[][] validgrid = new int[9][9];
@@ -238,5 +314,204 @@ class GridTest {
                       "9 ║ 2 │ 4 │ 8 ║ 7 │ 6 │ 9 ║ 3 │ 1 │ 5 ║\n" +
                       "══╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n";
         assert (Objects.equals(grid, testgrid.toString()));
+    }
+
+    @org.junit.jupiter.api.Test
+    void getInitialGridTest(){
+        int[][] numgrid = new int[][]{
+                {4, 5, 3, 8, 2, 6, 1, 9, 7},
+                {8, 9, 2, 5, 7, 1, 6, 3, 4},
+                {1, 6, 7, 4, 9, 3, 5, 2, 8},
+                {7, 1, 4, 9, 5, 2, 8, 6, 3},
+                {5, 8, 6, 1, 3, 7, 2, 4, 9},
+                {3, 2, 9, 6, 8, 4, 7, 5, 1},
+                {9, 3, 5, 2, 1, 8, 4, 7, 6},
+                {6, 7, 1, 3, 4, 5, 9, 8, 2},
+                {2, 4, 8, 7, 6, 9, 3, 1, 5}
+        };
+        Grid testgrid = Grid.of(numgrid);
+        testgrid.setInitialGrid(testgrid);
+        assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
+    }
+
+    @org.junit.jupiter.api.Test
+    void setInitialGridTest(){
+        int[][] numgrid = new int[][]{
+                {4, 5, 3, 8, 2, 6, 1, 9, 7},
+                {8, 9, 2, 5, 7, 1, 6, 3, 4},
+                {1, 6, 7, 4, 9, 3, 5, 2, 8},
+                {7, 1, 4, 9, 5, 2, 8, 6, 3},
+                {5, 8, 6, 1, 3, 7, 2, 4, 9},
+                {3, 2, 9, 6, 8, 4, 7, 5, 1},
+                {9, 3, 5, 2, 1, 8, 4, 7, 6},
+                {6, 7, 1, 3, 4, 5, 9, 8, 2},
+                {2, 4, 8, 7, 6, 9, 3, 1, 5}
+        };
+        Grid testgrid = Grid.of(numgrid);
+        testgrid.setInitialGrid(testgrid);
+        assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
+    }
+
+    @org.junit.jupiter.api.Test
+    void getSizeTest(){
+        int[][] numgrid = new int[][]{
+                {4, 5, 3, 8, 2, 6, 1, 9, 7},
+                {8, 9, 2, 5, 7, 1, 6, 3, 4},
+                {1, 6, 7, 4, 9, 3, 5, 2, 8},
+                {7, 1, 4, 9, 5, 2, 8, 6, 3},
+                {5, 8, 6, 1, 3, 7, 2, 4, 9},
+                {3, 2, 9, 6, 8, 4, 7, 5, 1},
+                {9, 3, 5, 2, 1, 8, 4, 7, 6},
+                {6, 7, 1, 3, 4, 5, 9, 8, 2},
+                {2, 4, 8, 7, 6, 9, 3, 1, 5}
+        };
+        Grid testgrid = Grid.of(numgrid);
+        testgrid.setInitialGrid(testgrid);
+        int len = testgrid.getSize();
+        assert (9 == len);
+    }
+
+    @org.junit.jupiter.api.Test
+    void getCellTest(){
+        int[][] numgrid = new int[][]{
+                {4, 5, 3, 8, 2, 6, 1, 9, 7},
+                {8, 9, 2, 5, 7, 1, 6, 3, 4},
+                {1, 6, 7, 4, 9, 3, 5, 2, 8},
+                {7, 1, 4, 9, 5, 2, 8, 6, 3},
+                {5, 8, 6, 1, 3, 7, 2, 4, 9},
+                {3, 2, 9, 6, 8, 4, 7, 5, 1},
+                {9, 3, 5, 2, 1, 8, 4, 7, 6},
+                {6, 7, 1, 3, 4, 5, 9, 8, 2},
+                {2, 4, 8, 7, 6, 9, 3, 1, 5}
+        };
+        Grid testgrid = Grid.of(numgrid);
+        testgrid.setInitialGrid(testgrid);
+        Cell testcell = testgrid.getCell(0,0);
+        assert (testcell.getValue() == 4);
+    }
+
+    @org.junit.jupiter.api.Test
+    void setCellValueTest(){
+        int[][] numgrid = new int[][]{
+                {4, 5, 3, 8, 2, 6, 1, 9, 7},
+                {8, 9, 2, 5, 7, 1, 6, 3, 4},
+                {1, 6, 7, 4, 9, 3, 5, 2, 8},
+                {7, 1, 4, 9, 5, 2, 8, 6, 3},
+                {5, 8, 6, 1, 3, 7, 2, 4, 9},
+                {3, 2, 9, 6, 8, 4, 7, 5, 1},
+                {9, 3, 5, 2, 1, 8, 4, 7, 6},
+                {6, 7, 1, 3, 4, 5, 9, 8, 2},
+                {2, 4, 8, 7, 6, 9, 3, 1, 5}
+        };
+        Grid testgrid = Grid.of(numgrid);
+        testgrid.setInitialGrid(testgrid);
+        testgrid.setCellValue(0,0,1);
+        Cell testcell = testgrid.getCell(0,0);
+        assert (testcell.getValue() == 1);
+    }
+
+    @org.junit.jupiter.api.Test
+    void getValueTest(){
+        Cell testcell = new Cell(1);
+        assert (testcell.getValue() == 1);
+    }
+
+    @org.junit.jupiter.api.Test
+    void setValueTest(){
+        Cell testcell = new Cell(1);
+        testcell.setValue(2);
+        assert (testcell.getValue() == 2);
+    }
+
+    @org.junit.jupiter.api.Test
+    void isEmptyTest(){
+        Cell testcell = new Cell(0);
+        assert (testcell.isEmpty());
+        testcell.setValue(1);
+        assert (!testcell.isEmpty());
+    }
+
+    @org.junit.jupiter.api.Test
+    void getRowNeighborsTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        Cell testcell3 = new Cell(3);
+        List<Cell> listcell = new ArrayList<>();
+        listcell.add(testcell2);
+        listcell.add(testcell3);
+        testcell.setRowNeighbors(listcell);
+        int i = 0;
+        int[] test = new int[]{2, 3};
+        for (Cell neighbor : testcell.getRowNeighbors()){
+            assert (neighbor.getValue() == test[i]);
+            i++;
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void setRowNeighborsTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        Cell testcell3 = new Cell(3);
+        List<Cell> listcell = new ArrayList<>();
+        listcell.add(testcell2);
+        listcell.add(testcell3);
+        testcell.setRowNeighbors(listcell);
+        int i = 0;
+        int[] test = new int[]{2, 3};
+        for (Cell neighbor : testcell.getRowNeighbors()){
+            assert (neighbor.getValue() == test[i]);
+            i++;
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void getColumnNeighborsTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        Cell testcell3 = new Cell(3);
+        List<Cell> listcell = new ArrayList<>();
+        listcell.add(testcell2);
+        listcell.add(testcell3);
+        testcell.setColumnNeighbors(listcell);
+        int i = 0;
+        int[] test = new int[]{2, 3};
+        for (Cell neighbor : testcell.getColumnNeighbors()){
+            assert (neighbor.getValue() == test[i]);
+            i++;
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void setColumnNeighborsTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        Cell testcell3 = new Cell(3);
+        List<Cell> listcell = new ArrayList<>();
+        listcell.add(testcell2);
+        listcell.add(testcell3);
+        testcell.setColumnNeighbors(listcell);
+        int i = 0;
+        int[] test = new int[]{2, 3};
+        for (Cell neighbor : testcell.getColumnNeighbors()){
+            assert (neighbor.getValue() == test[i]);
+            i++;
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void getNextCellTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        testcell.setNextCell(testcell2);
+        assert (testcell.getNextCell() == testcell2);
+    }
+
+    @org.junit.jupiter.api.Test
+    void setNextCellTest(){
+        Cell testcell = new Cell(1);
+        Cell testcell2 = new Cell(2);
+        testcell.setNextCell(testcell2);
+        assert (testcell.getNextCell() == testcell2);
     }
 }
