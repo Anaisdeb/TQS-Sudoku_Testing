@@ -1,6 +1,8 @@
 package test;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class TestCase {
     @Test
     public void testGridAll(){
@@ -47,6 +49,12 @@ public class TestCase {
         solverTest.solveTestTrue();
         solverTest.solveTestFalseGridFull();
         solverTest.solveTestFalseIllegalState();
+    }
+
+    @Test
+    public void testPlayAll() throws IOException {
+        PlayTest playTest = new PlayTest();
+        playTest.playCellParser();
     }
     
     @Test

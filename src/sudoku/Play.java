@@ -5,20 +5,24 @@ import java.util.Scanner;
 public class Play {
     private static Grid usrSudoku;
     private static Scanner scanner;
-    private static void startplay() {
+    private static void startplay(int exit) {
         System.out.println("\n1. Play\n2. Exit game");
         int usrChoice = scanner.nextInt();
         switch (usrChoice) {
             case 1:
-                complexity();
+                complexity(exit);
                 break;
             case 2:
                 System.out.println("Goodbye!");
-                System.exit(0);
+                if(exit == 0) {
+                    System.exit(0);
+                } else {
+                    return;
+                }
                 break;
             default:
                 System.out.println("Invalid selection, try again.");
-                startplay();
+                startplay(exit);
         }
     }
 
@@ -43,7 +47,7 @@ public class Play {
         return false;
     }
 
-    private static void complexity() {
+    private static void complexity(int exit) {
         System.out.println(
                 "Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
         int complexity = scanner.nextInt();
@@ -54,18 +58,22 @@ public class Play {
             System.out.println(usrSudoku.toString());
         } else if (complexity == 100) {
             System.out.println("Goodbye!");
-            System.exit(0);
+            if(exit == 0) {
+                System.exit(0);
+            } else {
+                return;
+            }
         } else {
             System.out.println("Invalid complexity selection. Try again.");
-            complexity();
+            complexity(exit);
         }
     }
 
-    public static void play() {
+    public static void play(int exit) {
         scanner = new Scanner(System.in);
         boolean endGame;
         while (true) {
-            startplay();
+            startplay(exit);
             endGame = false;
             while (!endGame) {
                 System.out.println("\n1. Fill in a value\n2. I give up, see the solution\n3. Exit the session");
