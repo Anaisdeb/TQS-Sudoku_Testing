@@ -1,19 +1,44 @@
 package test;
-import org.junit.jupiter.api.Test;
 
-import java.io.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 import sudoku.Generator;
 import sudoku.Grid;
 
 class GeneratorTest {
 
     @Test
-    void generateTest() throws FileNotFoundException {
+    public void generateTest(){
         Generator gen = new Generator(new MockSolver());
         Grid testgrid = Grid.emptyGrid();
         testgrid = gen.generate(1);
-        System.out.println(testgrid.toString());
+        int blank = 0;
+        for (int i = 0; i<9; i++){
+            for (int j = 0; j<9; j++){
+                int value = testgrid.getCell(i, j).getValue();
+                if(value == 0){
+                    blank++;
+                }
+            }
+        }
+        assert (blank == 1);
     }
+
+    @Test
+    public void generateTestCoverage(){
+        Generator gen = new Generator(new MockSolver());
+        Grid testgrid = Grid.emptyGrid();
+        testgrid = gen.generate(80);
+        int blank = 0;
+        for (int i = 0; i<9; i++){
+            for (int j = 0; j<9; j++){
+                int value = testgrid.getCell(i, j).getValue();
+                if(value == 0){
+                    blank++;
+                }
+            }
+        }
+        assert (blank == 80);
+    }
+
+
 }

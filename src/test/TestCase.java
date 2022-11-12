@@ -3,7 +3,7 @@ import org.junit.Test;
 
 public class TestCase {
     @Test
-    void testGridAll(){
+    public void testGridAll(){
         GridTest gridTest = new GridTest();
         gridTest.verifyGridTest();
         gridTest.ofTest();
@@ -31,16 +31,24 @@ public class TestCase {
     }
 
     @Test
-    void testGeneratorAll(){
+    public void testGeneratorAll(){
         GeneratorTest generatorTest = new GeneratorTest();
-
+        generatorTest.generateTest();
+        generatorTest.generateTestCoverage();
     }
 
     @Test
-    void testSolverAll(){
+    public void testSolverAll(){
         SolverTest solverTest = new SolverTest();
         solverTest.solveTestTrue();
         solverTest.solveTestFalseGridFull();
         solverTest.solveTestFalseIllegalState();
+    }
+    
+    @Test
+    public void testAll() {
+    	testGridAll();
+    	testGeneratorAll();
+    	testSolverAll();
     }
 }
