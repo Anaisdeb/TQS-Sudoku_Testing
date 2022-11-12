@@ -54,13 +54,18 @@ public class TestCase {
     @Test
     public void testPlayAll() throws IOException {
         PlayTest playTest = new PlayTest();
-        playTest.playCellParser();
+        playTest.playSolveTest();
+        playTest.playExitTest();
+        playTest.playComplexityTest();
+        playTest.playCellParserTest();
+        playTest.playCompleteTest();
     }
     
     @Test
-    public void testAll() {
+    public void testAll() throws IOException {
     	testGridAll();
     	testGeneratorAll();
     	testSolverAll();
+        testPlayAll();
     }
 }
