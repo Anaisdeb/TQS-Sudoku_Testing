@@ -6,8 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import sudoku.Generator;
+
 import sudoku.Grid;
 import sudoku.Grid.Cell;
+import sudoku.Solver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +29,7 @@ class GridTest {
 	 * Test null grid exception
 	 */
 	@Test
-	void verifyGridNull() {
+	void verifyGridNullTest() {
 		String expectedMessage = "Grid must not be null";
 		int[][] nullGrid = null;
 		Exception exception = Assertions.assertThrows(Exception.class, () -> Grid.verifyGrid(nullGrid));
@@ -41,7 +43,7 @@ class GridTest {
 	 * Test row grid exception
 	 */
 	@Test
-	void verifyGridRow() {
+	void verifyGridRowTest() {
 		String expectedMessage = "Grid must have nine rows";
 
 		// with one row
@@ -73,7 +75,7 @@ class GridTest {
 	 * Test column grid exception
 	 */
 	@Test
-	void verifyGridColumn() {
+	void verifyGridColumnTest() {
 		String expectedMessage = "Grid must have nine columns";
 
 		// with one column
@@ -105,7 +107,7 @@ class GridTest {
 	 * Test values grid exception
 	 */
 	@Test
-	void verifyGridValue() {
+	void verifyGridValueTest() {
 		String expectedMessage = "Grid must contain values from 0-9";
 
 		// with 10 value
@@ -145,7 +147,7 @@ class GridTest {
 	 * Test values grid exception
 	 */
 	@Test
-	void verifyGridValid() {        
+	void verifyGridValidTest() {        
         int[][] validGrid = new int[][]{
             {1, 0, 0, 6, 0, 2, 0, 0, 0},
             {1, 0, 0, 6, 0, 2, 0, 0, 0},
@@ -272,7 +274,7 @@ class GridTest {
 	@Test
 	void getNextEmptyCellOfTest() {
 		// No cell is empty after the first one
-		Generator generator = new Generator();
+		Generator generator = new Generator(new Solver());
 		Grid grid = generator.generate(0);
 		grid.setCellValue(0, 0, 0);
 		Optional<Cell> emptyCellTest = grid.getNextEmptyCellOf(grid.getCell(0, 0));

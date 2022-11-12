@@ -1,21 +1,15 @@
 package test;
 
-import org.junit.Assert;
+import org.junit.Test;
 import sudoku.Grid;
 import sudoku.Solver;
-
-import java.util.Arrays;
 import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static sudoku.Grid.*;
-import static sudoku.Solver.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolverTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void solveTestTrue() {
         int[][] testnumgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 0},
@@ -51,7 +45,7 @@ class SolverTest {
         assert (Objects.equals(grid.toString(), testgrid.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void solveTestFalseIllegalState(){
         int[][] testnumgrid = new int[][]{
                 {2, 0, 0, 9, 0, 0, 0, 0, 0},
@@ -76,7 +70,7 @@ class SolverTest {
         assertEquals("The provided grid is not solvable.", exception.getMessage());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void solveTestFalseGridFull(){
         int[][] testnumgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
