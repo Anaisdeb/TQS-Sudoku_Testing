@@ -8,12 +8,12 @@ public class Play {
     private static boolean startplay(int exit, GeneratorInterface gen) {
         System.out.println("\n1. Play\n2. Exit game");
         boolean game = true;
-        int usrChoice = scanner.nextInt();
+        String usrChoice = scanner.next();
         switch (usrChoice) {
-            case 1:
+            case "1":
                 game = complexity(exit, gen);
                 break;
-            case 2:
+            case "2":
                 System.out.println("Goodbye!");
                 if(exit == 0) {
                     System.exit(0);
@@ -23,7 +23,7 @@ public class Play {
                 break;
             default:
                 System.out.println("Invalid selection, try again.");
-                startplay(exit, gen);
+                game = startplay(exit, gen);
         }
         return game;
     }
@@ -52,7 +52,14 @@ public class Play {
     private static boolean complexity(int exit, GeneratorInterface gen) {
         System.out.println(
                 "Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
-        int complexity = scanner.nextInt();
+        String comp = scanner.next();
+        int complexity = 0;
+        boolean game = true;
+        if (comp != null && comp.matches("[0-9]+")){
+            complexity = Integer.parseInt(comp);
+        }else {
+            complexity = -1;
+        }
         if (complexity > 0 && complexity < 81) {
             GeneratorInterface generator = gen;
             usrSudoku = generator.generate(complexity);
@@ -63,13 +70,14 @@ public class Play {
             if(exit == 0) {
                 System.exit(0);
             } else {
+                game = false;
                 return false;
             }
         } else {
             System.out.println("Invalid complexity selection. Try again.");
-            complexity(exit, gen);
+            game = complexity(exit, gen);
         }
-        return true;
+        return game;
     }
 
     public static void play(int exit, GeneratorInterface gen) {
@@ -82,22 +90,22 @@ public class Play {
                 endGame = false;
                 while (!endGame) {
                     System.out.println("\n1. Fill in a value\n2. I give up, see the solution\n3. Exit the session");
-                    int usrChoice = scanner.nextInt();
+                    String usrChoice = scanner.next();
                     switch (usrChoice) {
-                        case 1:
+                        case "1":
                             cellParser();
                             if (!usrSudoku.getFirstEmptyCell().isPresent()) {
                                 System.out.println("\nYou're a winner!");
                                 endGame = true;
                             }
                             break;
-                        case 2:
+                        case "2":
                             Solver solver = new Solver();
                             solver.solve(usrSudoku);
                             System.out.println(usrSudoku.toString());
                             endGame = true;
                             break;
-                        case 3:
+                        case "3":
                             System.out.println("Quit to choose the difficulty");
                             endGame = true;
                             break;
