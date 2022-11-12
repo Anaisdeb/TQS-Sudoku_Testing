@@ -1,4 +1,8 @@
 
 1. Play
 2. Exit game
+Invalid selection, try again.
+
+1. Play
+2. Exit game
 Goodbye!
