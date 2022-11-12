@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.Permission;
 import java.util.Scanner;
-import org.apache.commons.io.FileUtils;
 import static org.junit.jupiter.api.Assertions.*;
 import static sudoku.Play.*;
 
@@ -66,7 +65,7 @@ class PlayTest {
     void playExitTest() throws IOException {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
-        final String testString = "2\n";
+        final String testString = "10\n"+"2\n";
         provideInput(testString);
         Play play = new Play();
         GeneratorInterface gen = new MockGenerator();
