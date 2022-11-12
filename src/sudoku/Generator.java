@@ -3,10 +3,10 @@ package sudoku;
 import java.util.Random;
 
 public class Generator {
-  private Solver solver;
+  private SolverInterface solver;
 
-  public Generator() {
-    this.solver = new Solver();
+  public Generator(SolverInterface solver1) {
+    this.solver = solver1;
   }
 
   public Grid generate(int numberOfEmptyCells) {

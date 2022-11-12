@@ -1,7 +1,6 @@
 package test;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Test;
 import sudoku.Grid;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import static sudoku.Grid.*;
 
 class GridTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void verifyGridTest(){
         Throwable nullexception = assertThrows(
                 IllegalArgumentException.class, () -> {
@@ -139,7 +138,7 @@ class GridTest {
         verifyGrid(validgrid);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void ofTest() {
 
         Cell[][] testcells = new Cell[9][9];
@@ -184,7 +183,7 @@ class GridTest {
         assert(Objects.equals(testgrid.toString(), grid.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void emptyGridTest(){
         Cell[][] testcells = new Cell[9][9];
         for (int row = 0; row < 9; row++) {
@@ -200,7 +199,7 @@ class GridTest {
         assert(Objects.equals(testgrid.toString(), test.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isValidValueForCellTest() {
         Grid testgrid = emptyGrid();
         Cell testcell = testgrid.getCell(0,0);
@@ -233,7 +232,7 @@ class GridTest {
         assertEquals(testfalsebox, false);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void tabTest() {
         Grid testgrid = emptyGrid();
         int[][] grid = new int[9][9];
@@ -245,13 +244,13 @@ class GridTest {
         assert(Arrays.deepEquals(grid, testgrid.tab()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getFirstEmptyCellTest(){}
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getNextEmptyCellOfTest(){}
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addTest(){
         int[][] numgrid = new int[][]{
                 {1, 0, 0, 0, 0, 0, 0, 0, 9},
@@ -278,7 +277,7 @@ class GridTest {
         assert (!testdecision);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void StringConverterTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -316,7 +315,7 @@ class GridTest {
         assert (Objects.equals(grid, testgrid.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getInitialGridTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -334,7 +333,7 @@ class GridTest {
         assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setInitialGridTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -352,7 +351,7 @@ class GridTest {
         assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getSizeTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -371,7 +370,7 @@ class GridTest {
         assert (9 == len);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getCellTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -390,7 +389,7 @@ class GridTest {
         assert (testcell.getValue() == 4);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setCellValueTest(){
         int[][] numgrid = new int[][]{
                 {4, 5, 3, 8, 2, 6, 1, 9, 7},
@@ -410,20 +409,20 @@ class GridTest {
         assert (testcell.getValue() == 1);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getValueTest(){
         Cell testcell = new Cell(1);
         assert (testcell.getValue() == 1);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setValueTest(){
         Cell testcell = new Cell(1);
         testcell.setValue(2);
         assert (testcell.getValue() == 2);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isEmptyTest(){
         Cell testcell = new Cell(0);
         assert (testcell.isEmpty());
@@ -431,7 +430,7 @@ class GridTest {
         assert (!testcell.isEmpty());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getRowNeighborsTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);
@@ -448,7 +447,7 @@ class GridTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setRowNeighborsTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);
@@ -465,7 +464,7 @@ class GridTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getColumnNeighborsTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);
@@ -482,7 +481,7 @@ class GridTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setColumnNeighborsTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);
@@ -499,7 +498,7 @@ class GridTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getNextCellTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);
@@ -507,7 +506,7 @@ class GridTest {
         assert (testcell.getNextCell() == testcell2);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setNextCellTest(){
         Cell testcell = new Cell(1);
         Cell testcell2 = new Cell(2);

@@ -48,7 +48,7 @@ public class Play {
                 "Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
         int complexity = scanner.nextInt();
         if (complexity > 0 && complexity < 81) {
-            Generator generator = new Generator();
+            Generator generator = new Generator(new Solver());
             usrSudoku = generator.generate(complexity);
             usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
             System.out.println(usrSudoku.toString());
@@ -87,7 +87,6 @@ public class Play {
                     case 3:
                         System.out.println("Quit to choose the difficulty");
                         endGame = true;
-                        scanner.close();
                         break;
                     default:
                         System.out.println("Invalid input, try again");
