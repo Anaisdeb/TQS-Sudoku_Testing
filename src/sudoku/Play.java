@@ -5,25 +5,27 @@ import java.util.Scanner;
 public class Play {
     private static Grid usrSudoku;
     private static Scanner scanner;
-    private static void startplay(int exit) {
+    private static boolean startplay(int exit) {
         System.out.println("\n1. Play\n2. Exit game");
+        boolean game = true;
         int usrChoice = scanner.nextInt();
         switch (usrChoice) {
             case 1:
-                complexity(exit);
+                game = complexity(exit);
                 break;
             case 2:
                 System.out.println("Goodbye!");
                 if(exit == 0) {
                     System.exit(0);
                 } else {
-                    return;
+                    return false;
                 }
                 break;
             default:
                 System.out.println("Invalid selection, try again.");
                 startplay(exit);
         }
+        return game;
     }
 
     private static boolean cellParser() {
@@ -47,7 +49,7 @@ public class Play {
         return false;
     }
 
-    private static void complexity(int exit) {
+    private static boolean complexity(int exit) {
         System.out.println(
                 "Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
         int complexity = scanner.nextInt();
@@ -61,45 +63,50 @@ public class Play {
             if(exit == 0) {
                 System.exit(0);
             } else {
-                return;
+                return false;
             }
         } else {
             System.out.println("Invalid complexity selection. Try again.");
             complexity(exit);
         }
+        return true;
     }
 
     public static void play(int exit) {
         scanner = new Scanner(System.in);
         boolean endGame;
-        while (true) {
-            startplay(exit);
-            endGame = false;
-            while (!endGame) {
-                System.out.println("\n1. Fill in a value\n2. I give up, see the solution\n3. Exit the session");
-                int usrChoice = scanner.nextInt();
-                switch (usrChoice) {
-                    case 1:
-                        cellParser();
-                        if (!usrSudoku.getFirstEmptyCell().isPresent()) {
-                            System.out.println("\nYou're a winner!");
+        boolean game = true;
+        while (game) {
+            game = startplay(exit);
+            if (game){
+                endGame = false;
+                while (!endGame) {
+                    System.out.println("\n1. Fill in a value\n2. I give up, see the solution\n3. Exit the session");
+                    int usrChoice = scanner.nextInt();
+                    switch (usrChoice) {
+                        case 1:
+                            cellParser();
+                            if (!usrSudoku.getFirstEmptyCell().isPresent()) {
+                                System.out.println("\nYou're a winner!");
+                                endGame = true;
+                            }
+                            break;
+                        case 2:
+                            Solver solver = new Solver();
+                            solver.solve(usrSudoku);
+                            System.out.println(usrSudoku.toString());
                             endGame = true;
-                        }
-                        break;
-                    case 2:
-                        Solver solver = new Solver();
-                        solver.solve(usrSudoku);
-                        System.out.println(usrSudoku.toString());
-                        endGame = true;
-                        break;
-                    case 3:
-                        System.out.println("Quit to choose the difficulty");
-                        endGame = true;
-                        break;
-                    default:
-                        System.out.println("Invalid input, try again");
+                            break;
+                        case 3:
+                            System.out.println("Quit to choose the difficulty");
+                            endGame = true;
+                            break;
+                        default:
+                            System.out.println("Invalid input, try again");
+                    }
                 }
             }
         }
     }
 }
+
