@@ -12,6 +12,7 @@ public class TestCase {
         gridTest.verifyGridColumnTest();
         gridTest.verifyGridValueTest();
         gridTest.verifyGridValidTest();
+        gridTest.verifyGridTest();
         gridTest.ofTest();
         gridTest.emptyGridTest();
         gridTest.isValidValueForCellTest();
