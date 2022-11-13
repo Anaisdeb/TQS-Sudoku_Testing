@@ -1,26 +1,40 @@
 package test;
 
+import java.util.Optional;
+
 import sudoku.Grid;
 import sudoku.SolverInterface;
 
 public class MockSolver implements SolverInterface {
+	private static final int EMPTY = 0;
+
+	private final int[] values;
+
+	public MockSolver() {
+		this.values = generateRandomList();
+	}
+    
     @Override
-    public void solve(Grid grid) {
-        int[][] numgrid = new int[][]{
-                {4, 5, 3, 8, 2, 6, 1, 9, 7},
-                {8, 9, 2, 5, 7, 1, 6, 3, 4},
-                {1, 6, 7, 4, 9, 3, 5, 2, 8},
-                {7, 1, 4, 9, 5, 2, 8, 6, 3},
-                {5, 8, 6, 1, 3, 7, 2, 4, 9},
-                {3, 2, 9, 6, 8, 4, 7, 5, 1},
-                {9, 3, 5, 2, 1, 8, 4, 7, 6},
-                {6, 7, 1, 3, 4, 5, 9, 8, 2},
-                {2, 4, 8, 7, 6, 9, 3, 1, 5}
-        };
-        for (int row = 0; row < 9; row++) {
-            for (int column = 0; column < 9; column++) {
-                grid.getCell(row,column).setValue(numgrid[row][column]);
-            }
-        }
-    }
+	public boolean solve(Grid grid, Optional<Grid.Cell> cell) {
+		if (!cell.isPresent()) {
+			return true;
+		}
+
+		for (int value : values) {
+			if (grid.isValidValueForCell(cell.get(), value)) {
+				cell.get().setValue(value);
+				if (solve(grid, grid.getNextEmptyCellOf(cell.get())))
+					return true;
+				cell.get().setValue(EMPTY);
+			}
+		}
+
+		return false;
+	}
+    
+    @Override
+    public int[] generateRandomList() {
+		int [] list ={1,2,3,4,5,6,7,8,9};
+		return list;
+	}
 }

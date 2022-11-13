@@ -3,43 +3,46 @@ package test;
 import org.junit.Test;
 import sudoku.Generator;
 import sudoku.Grid;
+import sudoku.Grid.Cell;
+import sudoku.Solver;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeneratorTest {
 
     @Test
     public void generateTest(){
-        Generator gen = new Generator(new MockSolver());
-        Grid testgrid = Grid.emptyGrid();
-        testgrid = gen.generate(1);
-        int blank = 0;
-        for (int i = 0; i<9; i++){
-            for (int j = 0; j<9; j++){
-                int value = testgrid.getCell(i, j).getValue();
-                if(value == 0){
-                    blank++;
-                }
-            }
-        }
-        assertEquals(blank, 1);
+    	Generator generator = new Generator(new MockSolver());
+    	Grid test = generator.generate(0);
+    	System.out.print(test.toString());
+    	int[][] grid = new int[][]{
+            {1, 2, 3, 4, 5, 6, 7, 8, 9},
+            {4, 5, 6, 7, 8, 9, 1, 2, 3},
+            {7, 8, 9, 1, 2, 3, 4, 5, 6},
+            {2, 1, 4, 3, 6, 5, 8, 9, 7},
+            {3, 6, 5, 8, 9, 7, 2, 1, 4},
+            {8, 9, 7, 2, 1, 4, 3, 6, 5},
+            {5, 3, 1, 6, 4, 2, 9, 7, 8},
+            {6, 4, 2, 9, 7, 8, 5, 3, 1},
+            {9, 7, 8, 5, 3, 1, 6, 4, 2}
+        };
+    	assertArrayEquals(test.tab(), grid);
     }
-
+    
     @Test
-    public void generateTestCoverage(){
-        Generator gen = new Generator(new MockSolver());
-        Grid testgrid = Grid.emptyGrid();
-        testgrid = gen.generate(80);
-        int blank = 0;
-        for (int i = 0; i<9; i++){
-            for (int j = 0; j<9; j++){
-                int value = testgrid.getCell(i, j).getValue();
-                if(value == 0){
-                    blank++;
-                }
+    public void eraseCellsTest() {
+    	Generator generator = new Generator(new Solver());
+        Grid grid = generator.generate(50);
+        int size = grid.getSize();
+        int nbEmptyCells = 0;
+        for (int row = 0; row < size; row++) {
+          for (int column = 0; column < size; column++) {
+            Cell cell = grid.getCell(row, column);
+            if (cell.getValue() == 0) {
+            	nbEmptyCells ++;
             }
+          }
         }
-        assertEquals(blank, 80);
+        assertEquals(nbEmptyCells, 50);
     }
-
-
 }

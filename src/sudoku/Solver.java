@@ -1,8 +1,5 @@
 package sudoku;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 public class Solver implements SolverInterface{
@@ -13,16 +10,9 @@ public class Solver implements SolverInterface{
 	public Solver() {
 		this.values = generateRandomList();
 	}
-
-	public void solve(Grid grid) {
-		boolean solvable = solve(grid, grid.getFirstEmptyCell());
-
-		if (!solvable) {
-			throw new IllegalStateException("The provided grid is not solvable.");
-		}
-	}
-
-	private boolean solve(Grid grid, Optional<Grid.Cell> cell) {
+	
+	@Override
+	public boolean solve(Grid grid, Optional<Grid.Cell> cell) {
 		if (!cell.isPresent()) {
 			return true;
 		}
@@ -37,11 +27,5 @@ public class Solver implements SolverInterface{
 		}
 
 		return false;
-	}
-
-	private int[] generateRandomList() {
-		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Collections.shuffle(list);
-		return list.stream().mapToInt(i -> i).toArray();
 	}
 }

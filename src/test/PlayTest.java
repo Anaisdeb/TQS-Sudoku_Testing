@@ -42,7 +42,7 @@ class PlayTest {
                                   "2";
         provideInput(testString);
         Play play = new Play();
-        GeneratorInterface gen = new MockGenerator();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestSolver.txt");
@@ -59,7 +59,7 @@ class PlayTest {
         final String testString = "10\n"+"2\n";
         provideInput(testString);
         Play play = new Play();
-        GeneratorInterface gen = new MockGenerator();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestExit.txt");
@@ -81,7 +81,7 @@ class PlayTest {
                                   "100\n";
         provideInput(testStr);
         Play play = new Play();
-        GeneratorInterface gen = new MockGenerator();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestComplexity.txt");
@@ -110,7 +110,7 @@ class PlayTest {
 
         provideInput(testString);
         Play play = new Play();
-        GeneratorInterface gen = new MockGenerator();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestCellParser.txt");
@@ -146,7 +146,7 @@ class PlayTest {
 
         provideInput(testString);
         Play play = new Play();
-        GeneratorInterface gen = new MockGenerator();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestComplete.txt");
