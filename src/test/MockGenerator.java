@@ -1,32 +1,51 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import sudoku.GeneratorInterface;
 import sudoku.Grid;
 import sudoku.SolverInterface;
 
 public class MockGenerator implements GeneratorInterface {
 	private SolverInterface solver;
-	
+	private Map<Integer, List<Integer>> eraseCellsOrder;
+
 	public MockGenerator(SolverInterface solver) {
-	    this.solver = solver;
-	  }
-	
-	@Override
-	public void eraseCells(Grid grid, int numberOfEmptyCells) {
-		for (int i = 0; i < numberOfEmptyCells; i++) {
-			Grid.Cell cell = grid.getCell(i, i);
-			if (!cell.isEmpty()) {
-				cell.setValue(0);
-			} else {
-				i--;
+		this.solver = solver;
+
+		Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+		int i = 0;
+		for (int numRow = 0; numRow < 9; numRow++) {
+			for (int numCol = 0; numCol < 9; numCol++) {
+				List<Integer> list = new ArrayList<Integer>();
+				list.add(numRow);
+				list.add(numCol);
+				map.put(i, list);
+				i++;
 			}
 		}
+		this.eraseCellsOrder = map;
 	}
-	
+
+	@Override
+	public void eraseCells(Grid grid, int numberOfEmptyCells) {
+		int row;
+		int col;
+		for (int i = 0; i < numberOfEmptyCells; i++) {
+			row = eraseCellsOrder.get(i).get(0);
+			col = eraseCellsOrder.get(i).get(1);
+			Grid.Cell cell = grid.getCell(row, col);
+			cell.setValue(0);
+		}
+	}
+
 	@Override
 	public Grid generate() {
-	    Grid grid = Grid.emptyGrid();
-	    solver.solve(grid);
-	    return grid;
+		Grid grid = Grid.emptyGrid();
+		solver.solve(grid);
+		return grid;
 	}
 }

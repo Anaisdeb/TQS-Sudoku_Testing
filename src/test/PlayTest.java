@@ -20,8 +20,8 @@ class PlayTest {
     public void setUpOutput() {
         testOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(testOut));
-    }
-
+    } 
+    
     private void provideInput(String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
@@ -37,7 +37,7 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testString = "1\n"+
-                                  "60\n"+
+                                  "10\n"+
                                   "2\n"+
                                   "2";
         provideInput(testString);
@@ -126,22 +126,16 @@ class PlayTest {
         System.setOut(out);
         final String testString = "1\n"+
                                   "10\n"+
-                                  "1\n"+ "B1\n"+ "5\n"+
-                                  "1\n"+ "B3\n"+ "6\n"+
-                                  "1\n"+ "B5\n"+ "8\n"+
-                                  "1\n"+ "B7\n"+ "3\n"+
-                                  "1\n"+ "B9\n"+ "4\n"+
-                                  "1\n"+ "E6\n"+ "8\n"+
-                                  "1\n"+ "E8\n"+ "4\n"+
-                                  "1\n"+ "F4\n"+ "2\n"+
-                                  "1\n"+ "I1\n"+ "7\n"+
-                                  "1\n"+ "I3\n"+ "8\n"+
-                                  "1\n"+ "I5\n"+ "9\n"+
-                                  "1\n"+ "I7\n"+ "6\n"+
-                                  "1\n"+ "I9\n"+ "5\n"+
-                                  "1\n"+ "C6\n"+ "9\n"+
-                                  "1\n"+ "H2\n"+ "3\n"+
-                                  "1\n"+ "H4\n"+ "6\n"+
+                                  "1\n"+ "A1\n"+ "1\n"+
+                                  "1\n"+ "B1\n"+ "2\n"+
+                                  "1\n"+ "C1\n"+ "3\n"+
+                                  "1\n"+ "D1\n"+ "4\n"+
+                                  "1\n"+ "E1\n"+ "5\n"+
+                                  "1\n"+ "F1\n"+ "6\n"+
+                                  "1\n"+ "G1\n"+ "7\n"+
+                                  "1\n"+ "H1\n"+ "8\n"+
+                                  "1\n"+ "I1\n"+ "9\n"+
+                                  "1\n"+ "A2\n"+ "4\n"+
                                   "2";
 
         provideInput(testString);

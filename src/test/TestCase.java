@@ -50,7 +50,7 @@ public class TestCase {
         solverTest.solveTestFalseGridFull();
         solverTest.solveTestFalseIllegalState();
     }
-/*
+
     @Test
     public void testPlayAll() throws IOException {
         PlayTest playTest = new PlayTest();
@@ -60,12 +60,12 @@ public class TestCase {
         playTest.playCellParserTest();
         playTest.playCompleteTest();
     }
-    */
+   
     @Test
     public void testAll() throws IOException {
     	testGridAll();
     	testGeneratorAll();
     	testSolverAll();
-        //testPlayAll();
+        testPlayAll();
     }
 }

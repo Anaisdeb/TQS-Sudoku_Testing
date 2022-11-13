@@ -14,7 +14,6 @@ class GeneratorTest {
     public void generateTest(){
     	Generator generator = new Generator(new MockSolver());
     	Grid test = generator.generate(0);
-    	System.out.print(test.toString());
     	int[][] grid = new int[][]{
             {1, 2, 3, 4, 5, 6, 7, 8, 9},
             {4, 5, 6, 7, 8, 9, 1, 2, 3},
