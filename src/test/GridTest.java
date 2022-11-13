@@ -12,9 +12,7 @@ import sudoku.Grid.Cell;
 import sudoku.Solver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static sudoku.Grid.*;
@@ -164,41 +162,9 @@ class GridTest {
 
 	@Test
 	void ofTest() {
-
-		Cell[][] testcells = new Cell[9][9];
-		for (int row = 0; row < 9; row++) {
-			for (int column = 0; column < 9; column++) {
-				Cell cell = new Cell(0);
-				testcells[row][column] = cell;
-			}
-		}
-		Grid testgrid = new Grid(testcells);
-
-		testgrid.setInitialGrid(testgrid);
-
-		testgrid.setCellValue(0, 0, 1);
-		testgrid.setCellValue(1, 0, 2);
-		testgrid.setCellValue(2, 0, 3);
-		testgrid.setCellValue(3, 0, 4);
-		testgrid.setCellValue(4, 0, 5);
-		testgrid.setCellValue(5, 0, 6);
-		testgrid.setCellValue(6, 0, 7);
-		testgrid.setCellValue(7, 0, 8);
-		testgrid.setCellValue(8, 0, 9);
-
-		int[][] numgrid = new int[][] { { 1, 0, 0, 0, 0, 0, 0, 0, 0 }, { 2, 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 3, 0, 0, 0, 0, 0, 0, 0, 0 }, { 4, 0, 0, 0, 0, 0, 0, 0, 0 }, { 5, 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 6, 0, 0, 0, 0, 0, 0, 0, 0 }, { 7, 0, 0, 0, 0, 0, 0, 0, 0 }, { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 9, 0, 0, 0, 0, 0, 0, 0, 0 } };
-		Grid grid = Grid.of(numgrid);
-
-		// I'm doing this becouse i don't know how to make the class 100% equals,
-		// becouse cell have
-		// private Collection<Cell> rowNeighbors;
-		// private Collection<Cell> columnNeighbors;
-		// private Collection<Cell> boxNeighbors;
-		// private Cell nextCell;
-		assert (Objects.equals(testgrid.toString(), grid.toString()));
+		Grid grid = emptyGrid();
+		Grid test = Grid.of(new int[9][9]);
+		assertArrayEquals(test.tab(), grid.tab());
 	}
 
 	@Test
@@ -214,7 +180,7 @@ class GridTest {
 
 		Grid test = emptyGrid();
 
-		assert (Objects.equals(testgrid.toString(), test.toString()));
+		assertEquals(testgrid.toString(), test.toString());
 	}
 
 	@Test
@@ -252,7 +218,7 @@ class GridTest {
 				grid[row][column] = 0;
 			}
 		}
-		assert (Arrays.deepEquals(grid, testgrid.tab()));
+		assertArrayEquals(grid, testgrid.tab());
 	}
 
 	@Test
@@ -316,7 +282,7 @@ class GridTest {
 				+ "7 ║ 9 │ 3 │ 5 ║ 2 │ 1 │ 8 ║ 4 │ 7 │ 6 ║\n" + "──╟───┼───┼───╫───┼───┼───╫───┼───┼───╢\n"
 				+ "8 ║ 6 │ 7 │ 1 ║ 3 │ 4 │ 5 ║ 9 │ 8 │ 2 ║\n" + "──╟───┼───┼───╫───┼───┼───╫───┼───┼───╢\n"
 				+ "9 ║ 2 │ 4 │ 8 ║ 7 │ 6 │ 9 ║ 3 │ 1 │ 5 ║\n" + "══╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n";
-		assert (Objects.equals(grid, testgrid.toString()));
+		assertEquals(grid, testgrid.toString());
 	}
 
 	@Test
@@ -327,7 +293,7 @@ class GridTest {
 				{ 2, 4, 8, 7, 6, 9, 3, 1, 5 } };
 		Grid testgrid = Grid.of(numgrid);
 		testgrid.setInitialGrid(testgrid);
-		assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
+		assertEquals(testgrid.getInitialGrid().toString(), testgrid.toString());
 	}
 
 	@Test
@@ -338,7 +304,7 @@ class GridTest {
 				{ 2, 4, 8, 7, 6, 9, 3, 1, 5 } };
 		Grid testgrid = Grid.of(numgrid);
 		testgrid.setInitialGrid(testgrid);
-		assert (Objects.equals(testgrid.getInitialGrid().toString(), testgrid.toString()));
+		assertEquals(testgrid.getInitialGrid().toString(), testgrid.toString());
 	}
 
 	@Test
@@ -350,7 +316,7 @@ class GridTest {
 		Grid testgrid = Grid.of(numgrid);
 		testgrid.setInitialGrid(testgrid);
 		int len = testgrid.getSize();
-		assert (9 == len);
+		assertEquals(9, len);
 	}
 
 	@Test
@@ -362,7 +328,7 @@ class GridTest {
 		Grid testgrid = Grid.of(numgrid);
 		testgrid.setInitialGrid(testgrid);
 		Cell testcell = testgrid.getCell(0, 0);
-		assert (testcell.getValue() == 4);
+		assertEquals(testcell.getValue(),4);
 	}
 
 	@Test
@@ -375,28 +341,28 @@ class GridTest {
 		testgrid.setInitialGrid(testgrid);
 		testgrid.setCellValue(0, 0, 1);
 		Cell testcell = testgrid.getCell(0, 0);
-		assert (testcell.getValue() == 1);
+		assertEquals(testcell.getValue(), 1);
 	}
 
 	@Test
 	void getValueTest() {
 		Cell testcell = new Cell(1);
-		assert (testcell.getValue() == 1);
+		assertEquals(testcell.getValue(),1);
 	}
 
 	@Test
 	void setValueTest() {
 		Cell testcell = new Cell(1);
 		testcell.setValue(2);
-		assert (testcell.getValue() == 2);
+		assertEquals(testcell.getValue(),2);
 	}
 
 	@Test
 	void isEmptyTest() {
 		Cell testcell = new Cell(0);
-		assert (testcell.isEmpty());
+		assertTrue(testcell.isEmpty());
 		testcell.setValue(1);
-		assert (!testcell.isEmpty());
+		assertFalse(testcell.isEmpty());
 	}
 
 	@Test
@@ -411,7 +377,7 @@ class GridTest {
 		int i = 0;
 		int[] test = new int[] { 2, 3 };
 		for (Cell neighbor : testcell.getRowNeighbors()) {
-			assert (neighbor.getValue() == test[i]);
+			assertEquals(neighbor.getValue(),test[i]);
 			i++;
 		}
 	}
@@ -428,7 +394,7 @@ class GridTest {
 		int i = 0;
 		int[] test = new int[] { 2, 3 };
 		for (Cell neighbor : testcell.getRowNeighbors()) {
-			assert (neighbor.getValue() == test[i]);
+			assertEquals(neighbor.getValue(), test[i]);
 			i++;
 		}
 	}
@@ -445,7 +411,7 @@ class GridTest {
 		int i = 0;
 		int[] test = new int[] { 2, 3 };
 		for (Cell neighbor : testcell.getColumnNeighbors()) {
-			assert (neighbor.getValue() == test[i]);
+			assertEquals(neighbor.getValue(), test[i]);
 			i++;
 		}
 	}
@@ -462,7 +428,7 @@ class GridTest {
 		int i = 0;
 		int[] test = new int[] { 2, 3 };
 		for (Cell neighbor : testcell.getColumnNeighbors()) {
-			assert (neighbor.getValue() == test[i]);
+			assertEquals(neighbor.getValue(), test[i]);
 			i++;
 		}
 	}
@@ -472,7 +438,7 @@ class GridTest {
 		Cell testcell = new Cell(1);
 		Cell testcell2 = new Cell(2);
 		testcell.setNextCell(testcell2);
-		assert (testcell.getNextCell() == testcell2);
+		assertEquals(testcell.getNextCell(), testcell2);
 	}
 
 	@Test
@@ -480,6 +446,6 @@ class GridTest {
 		Cell testcell = new Cell(1);
 		Cell testcell2 = new Cell(2);
 		testcell.setNextCell(testcell2);
-		assert (testcell.getNextCell() == testcell2);
+		assertEquals(testcell.getNextCell(), testcell2);
 	}
 }
