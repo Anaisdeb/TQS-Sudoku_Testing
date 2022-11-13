@@ -104,4 +104,11 @@ class SolverTest {
 
         assertEquals(grid.toString(), testgrid.toString());
     }
+	
+    @Test
+    void solveTest(){
+    	solveTestTrue();
+    	solveTestFalseIllegalState();
+    	solveTestFalseGridFull();
+    }
 }
