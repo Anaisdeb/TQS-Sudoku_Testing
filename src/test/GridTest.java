@@ -154,7 +154,16 @@ class GridTest {
             {0, 0, 0, 6, 0, 2, 0, 0, 0}
         };		
 		Assertions.assertDoesNotThrow(() -> Grid.verifyGrid(validGrid));
-    }
+    	}
+	
+	@Test
+	void verifyGridTest() {
+		verifyGridNullTest();
+		verifyGridRowTest();
+		verifyGridColumnTest();
+		verifyGridValueTest();
+		verifyGridValidTest();
+	}
 
 	@Test
 	void ofTest() {
