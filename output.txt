@@ -307,6 +307,21 @@ Successfully added 9 to I1
 1. Fill in a value
 2. I give up, see the solution
 3. Exit the session
+Invalid input, try again
+
+1. Fill in a value
+2. I give up, see the solution
+3. Exit the session
+Invalid input, try again
+
+1. Fill in a value
+2. I give up, see the solution
+3. Exit the session
+Invalid input, try again
+
+1. Fill in a value
+2. I give up, see the solution
+3. Exit the session
 
 Type in the location to fill in
 
