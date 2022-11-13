@@ -50,6 +50,7 @@ public class TestCase {
         solverTest.solveTestTrue();
         solverTest.solveTestFalseGridFull();
         solverTest.solveTestFalseIllegalState();
+        solverTest.solveTest();
     }
 /*
     @Test
