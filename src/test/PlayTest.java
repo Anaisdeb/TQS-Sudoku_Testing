@@ -2,20 +2,15 @@ package test;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import sudoku.GeneratorInterface;
 import sudoku.Play;
 import org.junit.Test;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.Permission;
-import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
-import static sudoku.Play.*;
 
 class PlayTest {
-    private static Scanner scanner;
     private final InputStream systemIn = System.in;
     private final PrintStream systemOut = System.out;
     private ByteArrayInputStream testIn;
@@ -30,10 +25,6 @@ class PlayTest {
     private void provideInput(String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
-    }
-
-    private String getOutput() {
-        return testOut.toString();
     }
 
     @After
@@ -58,7 +49,7 @@ class PlayTest {
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));
-        assert (output.equals(test));
+        assertEquals(output, test);
     }
 
     @Test
@@ -75,7 +66,7 @@ class PlayTest {
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));
-        assert (output.equals(test));
+        assertEquals(output,test);
     }
 
     @Test
@@ -97,7 +88,7 @@ class PlayTest {
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));
-        assert (output.equals(test));
+        assertEquals(output,test);
     }
 
     @Test
@@ -126,7 +117,7 @@ class PlayTest {
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));
-        assert (output.equals(test));
+        assertEquals(output,test);
     }
 
     @Test
@@ -162,6 +153,6 @@ class PlayTest {
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));
-        assert (output.equals(test));
+        assertEquals(output,test);
     }
 }

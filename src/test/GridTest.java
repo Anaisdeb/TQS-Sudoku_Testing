@@ -19,10 +19,6 @@ import static sudoku.Grid.*;
 
 class GridTest {
 
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
 	/**
 	 * Test null grid exception
 	 */

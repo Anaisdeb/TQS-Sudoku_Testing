@@ -17,7 +17,6 @@ public class MockSolver implements SolverInterface {
                 {6, 7, 1, 3, 4, 5, 9, 8, 2},
                 {2, 4, 8, 7, 6, 9, 3, 1, 5}
         };
-        Grid.Cell[][] testcells = new Grid.Cell[9][9];
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 grid.getCell(row,column).setValue(numgrid[row][column]);

@@ -3,6 +3,7 @@ package test;
 import org.junit.Test;
 import sudoku.Generator;
 import sudoku.Grid;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GeneratorTest {
 
@@ -20,7 +21,7 @@ class GeneratorTest {
                 }
             }
         }
-        assert (blank == 1);
+        assertEquals(blank, 1);
     }
 
     @Test
@@ -37,7 +38,7 @@ class GeneratorTest {
                 }
             }
         }
-        assert (blank == 80);
+        assertEquals(blank, 80);
     }
 
 

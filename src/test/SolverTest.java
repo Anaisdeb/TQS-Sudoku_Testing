@@ -1,9 +1,10 @@
 package test;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+
 import sudoku.Grid;
 import sudoku.Solver;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +43,7 @@ class SolverTest {
         Grid grid = Grid.of(numgrid);
         testgrid.setInitialGrid(testgrid);
 
-        assert (Objects.equals(grid.toString(), testgrid.toString()));
+        assertEquals(grid.toString(), testgrid.toString());
     }
 
     @Test
@@ -62,12 +63,10 @@ class SolverTest {
         testgrid.setInitialGrid(testgrid);
 
         Solver testsolver = new Solver();
-        Throwable exception = assertThrows(
-                IllegalStateException.class, () -> {
-                    testsolver.solve(testgrid);
-                }
-        );
-        assertEquals("The provided grid is not solvable.", exception.getMessage());
+        String expectedMessage = "The provided grid is not solvable.";
+		Exception exception = Assertions.assertThrows(Exception.class, () -> testsolver.solve(testgrid));
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
@@ -103,6 +102,6 @@ class SolverTest {
         Grid grid = Grid.of(numgrid);
         testgrid.setInitialGrid(testgrid);
 
-        assert (Objects.equals(grid.toString(), testgrid.toString()));
+        assertEquals(grid.toString(), testgrid.toString());
     }
 }
