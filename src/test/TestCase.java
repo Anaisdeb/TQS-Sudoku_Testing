@@ -12,6 +12,7 @@ public class TestCase {
         gridTest.verifyGridColumnTest();
         gridTest.verifyGridValueTest();
         gridTest.verifyGridValidTest();
+        gridTest.verifyGridTest();
         gridTest.ofTest();
         gridTest.emptyGridTest();
         gridTest.isValidValueForCellTest();
@@ -49,6 +50,7 @@ public class TestCase {
         solverTest.solveTestTrue();
         solverTest.solveTestFalseGridFull();
         solverTest.solveTestFalseIllegalState();
+        solverTest.solveTest();
     }
 
     @Test
