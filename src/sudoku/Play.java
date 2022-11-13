@@ -46,27 +46,49 @@ public class Play {
 	}
 
 	private static boolean complexity(int exit, GeneratorInterface gen) {
-		System.out.println(
-				"Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
-		String comp = scanner.next();
-		int complexity = 0;
+		System.out.println("\n1. Complexity by level\n2. Complexity by number of cells");
+		String choice = scanner.next();
 		boolean game = true;
-		if (comp != null && comp.matches("[0-9]+")) {
-			complexity = Integer.parseInt(comp);
-		} else {
-			complexity = -1;
-		}
-		if (complexity > 0 && complexity < 81) {
-			GeneratorInterface generator = gen;
-			usrSudoku = generator.generate(complexity);
-			usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
-			System.out.println(usrSudoku.toString());
-		} else if (complexity == 100) {
-			System.out.println("Goodbye!");
-			game = false;
-			return false;
-		} else {
-			System.out.println("Invalid complexity selection. Try again.");
+		switch (choice) {
+		case "1":
+			System.out.println("\n1. Easy\n2. Difficult");
+			String comp = scanner.next();
+			DB db = new DB();
+			if (comp.equals("1") || comp.equals("2")) {
+				usrSudoku = Grid.of(db.query(comp));
+				usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
+				System.out.println(usrSudoku.toString());
+				return true;
+			} else {
+				System.out.println("Invalid selection, try again.");
+				game = complexity(exit, gen);
+			}
+		case "2":
+			System.out.println(
+					"Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
+			String comp2 = scanner.next();
+			int complexity = 0;
+			if (comp2 != null && comp2.matches("[0-9]+")) {
+				complexity = Integer.parseInt(comp2);
+			} else {
+				complexity = -1;
+			}
+			if (complexity > 0 && complexity < 81) {
+				GeneratorInterface generator = gen;
+				usrSudoku = generator.generate(complexity);
+				usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
+				System.out.println(usrSudoku.toString());
+			} else if (complexity == 100) {
+				System.out.println("Goodbye!");
+				game = false;
+				return false;
+			} else {
+				System.out.println("Invalid complexity selection. Try again.");
+				game = complexity(exit, gen);
+			}
+			return game;
+		default:
+			System.out.println("Invalid selection, try again.");
 			game = complexity(exit, gen);
 		}
 		return game;

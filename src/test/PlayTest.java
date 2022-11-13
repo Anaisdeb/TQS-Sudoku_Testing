@@ -37,6 +37,7 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testString = "1\n"+
+        						"2\n"+
                                   "10\n"+
                                   "2\n"+
                                   "2";
@@ -74,6 +75,7 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testStr =    "1\n"+
+        							"2\n"+
                                   "0\n"+
                                   "81\n"+
                                   "B1\n"+
@@ -96,6 +98,7 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testString = "1\n"+
+        						"2\n"+
                                   "10\n"+
                                   "1\n"+
                                   "B1\n"+
@@ -130,7 +133,7 @@ class PlayTest {
     void playCompleteTest() throws IOException {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
-        final String testString = "1\n"+
+        final String testString = "1\n"+"2\n"+
                                   "10\n"+
                                   "1\n"+ "A1\n"+ "1\n"+
                                   "1\n"+ "B1\n"+ "2\n"+
