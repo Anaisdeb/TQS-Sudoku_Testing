@@ -198,7 +198,7 @@ class GridTest {
 		Grid grid;
 		int[][] numgrid = new int[][] { { 1, 0, 0, 0, 0, 0, 0, 0, 5 }, { 2, 0, 0, 0, 0, 0, 0, 0, 0 },
 				{ 3, 0, 0, 0, 0, 0, 0, 0, 0 }, { 4, 0, 9, 0, 0, 0, 0, 0, 0 }, { 5, 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 6, 0, 0, 0, 0, 0, 0, 0, 0 }, { 7, 0, 0, 0, 0, 0, 0, 0, 0 }, { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 6, 0, 0, 0, 0, 0, 0, 0, 0 }, { 7, 0, 1, 0, 0, 0, 0, 0, 0 }, { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
 				{ 9, 0, 0, 0, 0, 0, 0, 0, 0 } };
 		grid = of(numgrid);
 		Cell rowcell = grid.getCell(0, 1);
@@ -212,6 +212,10 @@ class GridTest {
 		Cell boxcell = grid.getCell(2, 2);
 		boolean testfalsebox = grid.isValidValueForCell(boxcell, 1);
 		assertEquals(testfalsebox, false);
+		
+		Cell allcell = grid.getCell(0, 2);
+		boolean testfalse = grid.isValidValueForCell(allcell, 1);
+		assertEquals(testfalse, false);
 	}
 
 	@Test
