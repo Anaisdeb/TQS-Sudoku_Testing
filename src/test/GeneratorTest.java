@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GeneratorTest {
 	
+	/**
+	 * Test Solver and DB getters.
+	 */
 	@Test
     public void getSolverAndDbTest(){
 		Generator generator = new Generator(new Solver(), new DB());
@@ -21,6 +24,9 @@ class GeneratorTest {
 		assertTrue(generator.getDb() instanceof DBInterface);
 	}
 	
+	/**
+	 * Test sudoku grid generation.
+	 */
 	@Test
     public void generateTest(){
     	Generator generator = new Generator(new MockSolver(), new MockDB());
@@ -39,6 +45,9 @@ class GeneratorTest {
     	assertArrayEquals(test.tab(), grid);
     }
     
+	/**
+	 * Test number of cells deleted.
+	 */
     @Test
     public void eraseCellsTest() {
     	Generator generator = new Generator(new Solver(), new DB());

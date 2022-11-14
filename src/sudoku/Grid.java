@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a sudoku object.
+ */
 public class Grid {
 
 	private final Cell[][] grid;
@@ -22,6 +25,11 @@ public class Grid {
 		this.grid = grid;
 	}
 
+	/**
+	 * Transforms a 2 dimensions array into a grid object.
+	 * @param grid
+	 * @return a sudoku grid
+	 */
 	public static Grid of(int[][] grid) {
 		verifyGrid(grid);
 
@@ -81,12 +89,20 @@ public class Grid {
 		}
 		return new Grid(cells);
 	}
-
+	
+	/**
+	 * Generate an empty sudoku grid.
+	 * @return an empty sudoku.
+	 */
 	public static Grid emptyGrid() {
 		int[][] emptyGrid = new int[9][9];
 		return Grid.of(emptyGrid);
 	}
 
+	/**
+	 * Check the properties for a valid sudoku grid.
+	 * @param grid
+	 */
 	public static void verifyGrid(int[][] grid) {
 		if (grid == null)
 			throw new IllegalArgumentException("Grid must not be null");
@@ -118,7 +134,11 @@ public class Grid {
 	public void setCellValue(int row, int column, int value){
 	    grid[row][column].setValue(value);
 	  }
-
+	
+	/**
+	 * Transforms a grid object into a 2 dimensions array.
+	 * @return a  2 dimensions array
+	 */
 	public int[][] tab() {
 		int[][] tab = new int[9][9];
 		int size = grid.length;
@@ -206,7 +226,10 @@ public class Grid {
 	public String toString() {
 		return StringConverter.toString(this);
 	}
-
+	
+	/**
+	 * Represents a cell of a grid.	 *
+	 */
 	public static class Cell {
 		private int value;
 		private Collection<Cell> rowNeighbors;
@@ -262,7 +285,10 @@ public class Grid {
 			this.nextCell = nextCell;
 		}
 	}
-
+	
+	/**
+	 * Constructor for displaying a sudoku in the view.
+	 */
 	private static class StringConverter {
 		public static String toString(Grid grid) {
 			StringBuilder builder = new StringBuilder();

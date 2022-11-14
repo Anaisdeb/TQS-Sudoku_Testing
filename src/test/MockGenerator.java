@@ -10,6 +10,9 @@ import sudoku.GeneratorInterface;
 import sudoku.Grid;
 import sudoku.SolverInterface;
 
+/**
+ * Override the random function eraseCells() which randomly chooses the cells to be erased.
+ */
 public class MockGenerator implements GeneratorInterface {
 	private SolverInterface solver;
 	private DBInterface db;
@@ -18,7 +21,9 @@ public class MockGenerator implements GeneratorInterface {
 	public MockGenerator(SolverInterface solver, DBInterface db) {
 		this.solver = solver;
 		this.db = db;
-
+		
+		// Defines the order of deletion of the cells 
+		// From left to right, in ascending order
 		Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
 		int i = 0;
 		for (int numRow = 0; numRow < 9; numRow++) {

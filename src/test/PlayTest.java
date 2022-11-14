@@ -14,6 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Black box testing. Input and output testing by simulating a user.
+ */
 class PlayTest {
     private final InputStream systemIn = System.in;
     private final PrintStream systemOut = System.out;

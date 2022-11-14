@@ -2,6 +2,9 @@ package sudoku;
 
 import java.util.Scanner;
 
+/**
+ * Start a game.
+ */
 public class Game {
 	private static Scanner scanner;
 

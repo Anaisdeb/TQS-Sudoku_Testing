@@ -3,6 +3,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Unit tests for the entire game.
+ */
 public class TestCase {
     @Test
     public void testGridAll(){

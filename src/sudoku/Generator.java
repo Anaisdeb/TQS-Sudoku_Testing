@@ -8,12 +8,15 @@ public class Generator implements GeneratorInterface {
 	public SolverInterface getSolver() {
 		return solver;
 	}
-	
+
 	@Override
 	public DBInterface getDb() {
 		return db;
 	}
 
+	/**
+	 * Constructs a new Generator instance.
+	 */
 	public Generator(SolverInterface solver, DBInterface db) {
 		this.solver = solver;
 		this.db = db;

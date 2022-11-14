@@ -2,10 +2,16 @@ package sudoku;
 
 import java.util.Scanner;
 
+/**
+ * User interface to play a sudoku game.
+ */
 public class Play {
 	private static Grid usrSudoku;
 	private static Scanner scanner;
-
+	
+	/**
+	 * Play or exit the game.
+	 */
 	private static boolean startplay(int exit, GeneratorInterface gen) {
 		System.out.println("\n1. Play\n2. Exit game");
 		boolean game = true;
@@ -23,7 +29,10 @@ public class Play {
 		}
 		return game;
 	}
-
+	
+	/**
+	 * Parse the user's choice regarding the entry of a value.
+	 */
 	private static boolean cellParser() {
 		System.out.println("\nType in the location to fill in");
 		String location = scanner.next().toUpperCase();
@@ -44,7 +53,10 @@ public class Play {
 		System.out.println(usrSudoku.toString());
 		return false;
 	}
-
+	
+	/**
+	 * Determines the sudoku grid according to the user's chosen complexity.
+	 */
 	private static boolean complexity(int exit, GeneratorInterface gen) {
 		System.out.println("\n1. Complexity by level\n2. Complexity by number of cells");
 		String choice = scanner.next();
@@ -105,7 +117,10 @@ public class Play {
 		}
 		return game;
 	}
-
+	
+	/**
+	 * Enter a value, see the solution or quit the game.
+	 */
 	public static void play(int exit, GeneratorInterface gen) {
 		scanner = new Scanner(System.in);
 		boolean endGame;

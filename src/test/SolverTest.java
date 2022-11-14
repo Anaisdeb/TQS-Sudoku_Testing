@@ -8,6 +8,9 @@ import sudoku.Solver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Solver tests.
+ */
 class SolverTest {
 
     @Test
