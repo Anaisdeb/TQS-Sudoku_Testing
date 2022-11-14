@@ -54,7 +54,15 @@ public class Play {
 			System.out.println("\n1. Easy\n2. Difficult\n3. Exit");
 			String comp = scanner.next();
 			if (comp.equals("1") || comp.equals("2")) {
-				int[][] grid = gen.getDb().query(comp);
+				int[][] grid = new int[9][9];
+				try {
+					grid = gen.getDb().query(comp);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					System.out.println("Fix the problem and come back to play!");
+					game = false;
+					return game;
+				}
 				usrSudoku = Grid.of(grid);
 				usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
 				System.out.println(usrSudoku.toString());

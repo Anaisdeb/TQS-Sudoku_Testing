@@ -2,8 +2,12 @@ package test;
 
 import org.junit.After;
 import org.junit.Before;
+
+import sudoku.Generator;
 import sudoku.GeneratorInterface;
 import sudoku.Play;
+import sudoku.Solver;
+
 import org.junit.Test;
 import java.io.*;
 import java.nio.file.Files;
@@ -75,7 +79,7 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testStr =    "1\n"+
-        							"2\n"+
+        						  "2\n"+
                                   "0\n"+
                                   "2\n"+
                                   "81\n"+
@@ -121,6 +125,25 @@ class PlayTest {
         play.play(1, gen);
         Path path = Path.of("output.txt");
         Path path1 = Path.of("TestComplexityLevel.txt");
+        System.setOut(systemOut);
+        String output = new String(Files.readAllBytes(path));
+        String test = new String(Files.readAllBytes(path1));
+        assertEquals(output,test);
+    }
+    
+    @Test
+    void playEmptyDbTest() throws Exception {
+        PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
+        System.setOut(out);
+        final String testStr =    "1\n"+
+        						  "1\n"+
+        						  "1\n";
+        provideInput(testStr);
+        Play play = new Play();
+        GeneratorInterface gen = new Generator(new Solver(), new MockDBEmpty());
+        play.play(1, gen);
+        Path path = Path.of("output.txt");
+        Path path1 = Path.of("TestEmptyDb.txt");
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));

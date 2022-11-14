@@ -1,0 +1,12 @@
+
+1. Play
+2. Exit game
+
+1. Complexity by level
+2. Complexity by number of cells
+
+1. Easy
+2. Difficult
+3. Exit
+Incorrect database file.
+Fix the problem and come back to play!

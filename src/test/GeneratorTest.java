@@ -3,16 +3,25 @@ package test;
 import org.junit.Test;
 
 import sudoku.DB;
+import sudoku.DBInterface;
 import sudoku.Generator;
 import sudoku.Grid;
 import sudoku.Grid.Cell;
 import sudoku.Solver;
+import sudoku.SolverInterface;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeneratorTest {
-
-    @Test
+	
+	@Test
+    public void getSolverAndDbTest(){
+		Generator generator = new Generator(new Solver(), new DB());
+		assertTrue(generator.getSolver() instanceof SolverInterface);
+		assertTrue(generator.getDb() instanceof DBInterface);
+	}
+	
+	@Test
     public void generateTest(){
     	Generator generator = new Generator(new MockSolver(), new MockDB());
     	Grid test = generator.generate(0);

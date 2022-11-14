@@ -40,6 +40,7 @@ public class TestCase {
     @Test
     public void testGeneratorAll(){
         GeneratorTest generatorTest = new GeneratorTest();
+        generatorTest.getSolverAndDbTest();
         generatorTest.generateTest();
         generatorTest.eraseCellsTest();
     }
@@ -54,25 +55,27 @@ public class TestCase {
     }
     
     @Test
-    public void testDbAll(){
+    public void testDbAll() throws Exception{
         DBTest dbTest = new DBTest();
         dbTest.testQueryEasy();
         dbTest.testQueryDifficult();
+        dbTest.testGetContent();
     }
 
     @Test
-    public void testPlayAll() throws IOException {
+    public void testPlayAll() throws Exception {
         PlayTest playTest = new PlayTest();
         playTest.playSolveTest();
         playTest.playExitTest();
         playTest.playComplexityByCellsTest();
         playTest.playComplexityByLevelTest();
+        playTest.playEmptyDbTest();
         playTest.playCellParserTest();
         playTest.playCompleteTest();
     }
    
     @Test
-    public void testAll() throws IOException {
+    public void testAll() throws Exception {
     	testGridAll();
     	testGeneratorAll();
     	testSolverAll();
