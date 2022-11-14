@@ -20,7 +20,7 @@ public class MockDB implements DBInterface {
 	            {9, 7, 8, 0, 3, 0, 6, 4, 2}
 	        };
 	        return easyGrid;
-		case "2":
+		default:
 			int[][] difficultGrid = new int[][]{
 	            {0, 0, 3, 4, 5, 6, 7, 0, 0},
 	            {4, 0, 0, 7, 8, 9, 1, 2, 3},
@@ -33,10 +33,6 @@ public class MockDB implements DBInterface {
 	            {9, 0, 8, 0, 3, 0, 0, 0, 0}
 	        };
 	        return difficultGrid;
-		default:
-			System.out.println("Invalid selection.");
 		}
-		return null;
 	}
-
 }

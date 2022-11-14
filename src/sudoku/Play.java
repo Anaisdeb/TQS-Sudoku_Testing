@@ -53,9 +53,9 @@ public class Play {
 		case "1":
 			System.out.println("\n1. Easy\n2. Difficult\n3. Exit");
 			String comp = scanner.next();
-			DB db = new DB();
 			if (comp.equals("1") || comp.equals("2")) {
-				usrSudoku = Grid.of(db.query(comp));
+				int[][] grid = gen.getDb().query(comp);
+				usrSudoku = Grid.of(grid);
 				usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
 				System.out.println(usrSudoku.toString());
 				return true;

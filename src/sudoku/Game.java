@@ -8,7 +8,8 @@ public class Game {
 	public static void main(String[] args) {
 		Play play = new Play();
 		SolverInterface solver = new Solver();
-		GeneratorInterface gen = new Generator(solver);
+		DB db = new DB();
+		GeneratorInterface gen = new Generator(solver, db);
 		play.play(0, gen);
 	}
 

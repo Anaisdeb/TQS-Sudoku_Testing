@@ -16,12 +16,9 @@ public class DB implements DBInterface {
 		switch (q) {
 		case "1":
 			return getContent("easy.txt");
-		case "2":
-			return getContent("difficult.txt");
 		default:
-			System.out.println("Invalid selection.");
+			return getContent("difficult.txt");
 		}
-		return null;
 	}
 
 	public int[][] getContent(String fileName) {
@@ -36,7 +33,7 @@ public class DB implements DBInterface {
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 			StringBuffer sb = new StringBuffer();
-			
+
 			ligne = br.readLine();
 			while (ligne != null && i != nbLigne) {
 				ligne = br.readLine();

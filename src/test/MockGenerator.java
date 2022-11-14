@@ -5,16 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sudoku.DBInterface;
 import sudoku.GeneratorInterface;
 import sudoku.Grid;
 import sudoku.SolverInterface;
 
 public class MockGenerator implements GeneratorInterface {
 	private SolverInterface solver;
+	private DBInterface db;
 	private Map<Integer, List<Integer>> eraseCellsOrder;
 
-	public MockGenerator(SolverInterface solver) {
+	public MockGenerator(SolverInterface solver, DBInterface db) {
 		this.solver = solver;
+		this.db = db;
 
 		Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
 		int i = 0;
@@ -52,5 +55,10 @@ public class MockGenerator implements GeneratorInterface {
 	@Override
 	public SolverInterface getSolver() {
 		return solver;
+	}
+
+	@Override
+	public DBInterface getDb() {
+		return db;
 	}
 }

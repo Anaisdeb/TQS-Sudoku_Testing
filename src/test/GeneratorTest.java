@@ -1,6 +1,8 @@
 package test;
 
 import org.junit.Test;
+
+import sudoku.DB;
 import sudoku.Generator;
 import sudoku.Grid;
 import sudoku.Grid.Cell;
@@ -12,7 +14,7 @@ class GeneratorTest {
 
     @Test
     public void generateTest(){
-    	Generator generator = new Generator(new MockSolver());
+    	Generator generator = new Generator(new MockSolver(), new MockDB());
     	Grid test = generator.generate(0);
     	int[][] grid = new int[][]{
             {1, 2, 3, 4, 5, 6, 7, 8, 9},
@@ -30,7 +32,7 @@ class GeneratorTest {
     
     @Test
     public void eraseCellsTest() {
-    	Generator generator = new Generator(new Solver());
+    	Generator generator = new Generator(new Solver(), new DB());
         Grid grid = generator.generate(50);
         int size = grid.getSize();
         int nbEmptyCells = 0;

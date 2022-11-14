@@ -52,6 +52,13 @@ public class TestCase {
         solverTest.solveTestFalseIllegalState();
         solverTest.solveTest();
     }
+    
+    @Test
+    public void testDbAll(){
+        DBTest dbTest = new DBTest();
+        dbTest.testQueryEasy();
+        dbTest.testQueryDifficult();
+    }
 
     @Test
     public void testPlayAll() throws IOException {
@@ -69,6 +76,7 @@ public class TestCase {
     	testGridAll();
     	testGeneratorAll();
     	testSolverAll();
+    	testDbAll();
         testPlayAll();
     }
 }

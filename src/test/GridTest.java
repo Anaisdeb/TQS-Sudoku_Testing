@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import sudoku.DB;
 import sudoku.Generator;
 
 import sudoku.Grid;
@@ -248,7 +249,7 @@ class GridTest {
 	@Test
 	void getNextEmptyCellOfTest() {
 		// No cell is empty after the first one
-		Generator generator = new Generator(new Solver());
+		Generator generator = new Generator(new Solver(), new DB());
 		Grid grid = generator.generate(0);
 		grid.setCellValue(0, 0, 0);
 		Optional<Cell> emptyCellTest = grid.getNextEmptyCellOf(grid.getCell(0, 0));

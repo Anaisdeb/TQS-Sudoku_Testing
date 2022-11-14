@@ -5,6 +5,7 @@ import java.util.Random;
 public interface GeneratorInterface {
 	
 	public SolverInterface getSolver();
+	public DBInterface getDb();
 
 	public default Grid generate(int numberOfEmptyCells) {
 		Grid grid = generate();
