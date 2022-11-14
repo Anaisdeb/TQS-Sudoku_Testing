@@ -36,4 +36,11 @@
 4.	each number in the range 1..9 occurs only once in each column
 5.	each number the range 1..9 occurs only once in each of the nine 3x3 sub-grids, or “boxes”, that make up the board
 * *Sudoku Solver* - solves any Sudoku grid.
-...
+* ...
+
+## 4 mock objects
+
+* MockDB: cancels the random function DB.query() which returns a random sudoku grid from a text file according to the level of complexity requested.
+* MockDBEmpty: simulates the reading of an empty database thanks to the TestEmptyDB.txt file.
+* MockSolver: cancels the random function SolverInterface.generateRandomList() that returns a list of numbers from 1 to 9 in random order to solve a sudoku grid.
+* MockGenerator: cancels the random function GeneratorInterface.eraseCells() which randomly chooses the cells to be erased in a solvable grid to generate a grid according to a number of empty cells which defines the complexity.
