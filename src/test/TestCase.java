@@ -58,7 +58,8 @@ public class TestCase {
         PlayTest playTest = new PlayTest();
         playTest.playSolveTest();
         playTest.playExitTest();
-        playTest.playComplexityTest();
+        playTest.playComplexityByCellsTest();
+        playTest.playComplexityByLevelTest();
         playTest.playCellParserTest();
         playTest.playCompleteTest();
     }

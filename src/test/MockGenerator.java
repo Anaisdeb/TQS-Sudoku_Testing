@@ -48,4 +48,9 @@ public class MockGenerator implements GeneratorInterface {
 		solver.solve(grid);
 		return grid;
 	}
+
+	@Override
+	public SolverInterface getSolver() {
+		return solver;
+	}
 }

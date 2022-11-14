@@ -3,6 +3,8 @@ package sudoku;
 import java.util.Random;
 
 public interface GeneratorInterface {
+	
+	public SolverInterface getSolver();
 
 	public default Grid generate(int numberOfEmptyCells) {
 		Grid grid = generate();

@@ -37,8 +37,8 @@ class PlayTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testString = "1\n"+
-        						"2\n"+
-                                  "10\n"+
+        						  "2\n"+
+                                  "60\n"+
                                   "2\n"+
                                   "2";
         provideInput(testString);
@@ -71,7 +71,7 @@ class PlayTest {
     }
 
     @Test
-    void playComplexityTest() throws IOException {
+    void playComplexityByCellsTest() throws IOException {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         final String testStr =    "1\n"+
@@ -90,7 +90,37 @@ class PlayTest {
         GeneratorInterface gen = new MockGenerator(new MockSolver());
         play.play(1, gen);
         Path path = Path.of("output.txt");
-        Path path1 = Path.of("TestComplexity.txt");
+        Path path1 = Path.of("TestComplexityCells.txt");
+        System.setOut(systemOut);
+        String output = new String(Files.readAllBytes(path));
+        String test = new String(Files.readAllBytes(path1));
+        assertEquals(output,test);
+    }
+    
+    @Test
+    void playComplexityByLevelTest() throws IOException {
+        PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
+        System.setOut(out);
+        final String testStr =    "1\n"+
+        						  "0\n"+
+        						  "1\n"+
+                                  "0\n"+
+                                  "1\n"+
+                                  "1\n"+
+                                  "3\n"+
+                                  "1\n"+
+                                  "1\n"+
+                                  "2\n"+
+                                  "3\n"+
+                                  "1\n"+
+                                  "1\n"+
+                                  "3\n";
+        provideInput(testStr);
+        Play play = new Play();
+        GeneratorInterface gen = new MockGenerator(new MockSolver());
+        play.play(1, gen);
+        Path path = Path.of("output.txt");
+        Path path1 = Path.of("TestComplexityLevel.txt");
         System.setOut(systemOut);
         String output = new String(Files.readAllBytes(path));
         String test = new String(Files.readAllBytes(path1));

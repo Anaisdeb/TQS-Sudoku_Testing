@@ -51,7 +51,7 @@ public class Play {
 		boolean game = true;
 		switch (choice) {
 		case "1":
-			System.out.println("\n1. Easy\n2. Difficult");
+			System.out.println("\n1. Easy\n2. Difficult\n3. Exit");
 			String comp = scanner.next();
 			DB db = new DB();
 			if (comp.equals("1") || comp.equals("2")) {
@@ -59,16 +59,20 @@ public class Play {
 				usrSudoku.setInitialGrid(Grid.of(usrSudoku.tab()));
 				System.out.println(usrSudoku.toString());
 				return true;
+			} else if (comp.equals("3")) {
+				System.out.println("Goodbye!");
+				game = false;
 			} else {
 				System.out.println("Invalid selection, try again.");
 				game = complexity(exit, gen);
 			}
+			break;
 		case "2":
 			System.out.println(
 					"Enter the desired number of empty cells which will control the complexity of the grid: \nEnter 100 to exit game.");
 			String comp2 = scanner.next();
 			int complexity = 0;
-			if (comp2 != null && comp2.matches("[0-9]+")) {
+			if (comp2.matches("[0-9]+")) {
 				complexity = Integer.parseInt(comp2);
 			} else {
 				complexity = -1;
@@ -86,7 +90,7 @@ public class Play {
 				System.out.println("Invalid complexity selection. Try again.");
 				game = complexity(exit, gen);
 			}
-			return game;
+			break;
 		default:
 			System.out.println("Invalid selection, try again.");
 			game = complexity(exit, gen);
@@ -114,8 +118,7 @@ public class Play {
 						}
 						break;
 					case "2":
-						Solver solver = new Solver();
-						solver.solve(usrSudoku);
+						gen.getSolver().solve(usrSudoku);
 						System.out.println(usrSudoku.toString());
 						endGame = true;
 						break;
