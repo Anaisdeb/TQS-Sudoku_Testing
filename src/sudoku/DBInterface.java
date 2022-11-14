@@ -8,9 +8,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Database interface.
+ */
 public interface DBInterface {
+	
+	/**
+	 * Analyzes the game request and returns a random sudoku grid of the requested difficulty level.
+	 * @param q
+	 * @return a randomly filled Sudoku
+	 * @throws Exception
+	 */
 	public int[][] query(String q) throws Exception;
 	
+	/**
+	 * Reads the content of a text file from the sudoku database.
+	 * @param fileName
+	 * @return a randomly filled Sudoku
+	 * @throws Exception
+	 */
 	public default int[][] getContent(String fileName) throws Exception {
 		int[][] grid = new int[9][9];
 		String ligne = "";

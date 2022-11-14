@@ -1,5 +1,8 @@
 package sudoku;
 
+/**
+ * Implements the database interface.
+ */
 public class DB implements DBInterface {
 
 	@Override

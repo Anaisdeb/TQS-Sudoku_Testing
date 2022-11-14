@@ -7,8 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import sudoku.DB;
 
+/**
+ * Test the database access functions.
+ */
 class DBTest {
-
+	
+	/**
+	 * Test an easy sudoku grid query.
+	 * @throws Exception
+	 */
 	@Test
 	void testQueryEasy() throws Exception {
 		DB db = new DB();
@@ -24,7 +31,11 @@ class DBTest {
 		}
 		assertEquals(nbEmptyCells/40, 0);
 	}
-
+	
+	/**
+	 * Test a difficult sudoku grid query.
+	 * @throws Exception
+	 */
 	@Test
 	void testQueryDifficult() throws Exception {
 		DB db = new DB();
@@ -40,7 +51,10 @@ class DBTest {
 		}
 		assertEquals(nbEmptyCells/40, 1);
 	}
-
+	
+	/**
+	 * Test reading an empty database.
+	 */
 	@Test
 	void testGetContent() {
 		DB db = new DB();

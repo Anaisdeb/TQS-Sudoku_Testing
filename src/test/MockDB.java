@@ -2,6 +2,9 @@ package test;
 
 import sudoku.DBInterface;
 
+/**
+ * Cancels the random function query() which returns a random sudoku grid from a text file according to the level of complexity requested.
+ */
 public class MockDB implements DBInterface {
 
 	@Override
