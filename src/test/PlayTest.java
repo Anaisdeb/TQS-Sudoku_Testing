@@ -77,9 +77,13 @@ class PlayTest {
         final String testStr =    "1\n"+
         							"2\n"+
                                   "0\n"+
+                                  "2\n"+
                                   "81\n"+
+                                  "2\n"+
                                   "B1\n"+
+                                  "2\n"+
                                   "-10\n"+
+                                  "2\n"+
                                   "100\n";
         provideInput(testStr);
         Play play = new Play();

@@ -1,6 +1,9 @@
 
 1. Play
 2. Exit game
+
+1. Complexity by level
+2. Complexity by number of cells
 Enter the desired number of empty cells which will control the complexity of the grid: 
 Enter 100 to exit game.
   ║ A │ B │ C ║ D │ E │ F ║ G │ H │ I ║
