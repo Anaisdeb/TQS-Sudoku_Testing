@@ -10,6 +10,9 @@
   * Create a Sudoku generator and solver for Java, then test it with JUnit Testing in Eclipse
   * This library for Java and Android provides the basis for the project : [Sudoku](https://github.com/a11n/sudoku).
   * To keep in mind: we are using 0 to represent an element of the Sudoku grid that the player has not yet filled in.
+  
+## Test coverage
+![Coverage](https://github.com/NIU1607107/TQS-Sudoku/blob/main/test_coverage.jpg)
 
 ## Launch the project in the terminal
 - Clone repository : `git clone https://github.com/NIU1607107/TQS-Sudoku.git`
